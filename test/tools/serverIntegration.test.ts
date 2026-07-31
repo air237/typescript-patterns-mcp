@@ -39,7 +39,7 @@ describe("MCP server integration (in-memory)", () => {
     };
   }
 
-  it("advertises the ping, list_patterns, pattern_examples, generate_pattern and detect_pattern tools via tools/list", async () => {
+  it("advertises the ping, list_patterns, pattern_examples, generate_pattern, detect_pattern and validate_pattern tools via tools/list", async () => {
     const { client, close } = await connectClientAndServer();
     try {
       const tools = await client.listTools();
@@ -49,7 +49,8 @@ describe("MCP server integration (in-memory)", () => {
       expect(names).toContain("pattern_examples");
       expect(names).toContain("generate_pattern");
       expect(names).toContain("detect_pattern");
-      expect(names).toHaveLength(5);
+      expect(names).toContain("validate_pattern");
+      expect(names).toHaveLength(6);
     } finally {
       await close();
     }
@@ -70,6 +71,7 @@ describe("MCP server integration (in-memory)", () => {
       expect(text).toContain("pattern_examples");
       expect(text).toContain("generate_pattern");
       expect(text).toContain("detect_pattern");
+      expect(text).toContain("validate_pattern");
     } finally {
       await close();
     }
@@ -193,6 +195,63 @@ describe("MCP server integration (in-memory)", () => {
       expect(result.isError).toBe(true);
       const content = result.content as Array<{ type: string; text: string }>;
       expect(content[0]?.text ?? "").toMatch(/Unknown pattern/);
+    } finally {
+      await close();
+    }
+  });
+
+  it("validate_pattern flags a public-ctor Singleton with an ERROR issue", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const result = await client.callTool({
+        name: "validate_pattern",
+        arguments: {
+          source: `
+            export class Broken {
+              public constructor() {}
+              static getInstance(): Broken { return new Broken(); }
+            }
+          `,
+          pattern: "singleton",
+        },
+      });
+      expect(result.isError).toBeFalsy();
+      const content = result.content as Array<{ type: string; text: string }>;
+      const payload = JSON.parse(content[0]!.text) as {
+        supportedPatterns: string[];
+        issueCount: number;
+        errors: number;
+        warnings: number;
+        infos: number;
+        issues: Array<{
+          pattern: string;
+          className: string;
+          severity: string;
+          issue: string;
+          suggestion: string;
+        }>;
+      };
+      expect(payload.supportedPatterns).toContain("Singleton");
+      expect(payload.errors).toBeGreaterThanOrEqual(1);
+      const firstError = payload.issues.find((i) => i.severity === "ERROR");
+      expect(firstError).toBeDefined();
+      expect(firstError?.pattern).toBe("Singleton");
+      expect(firstError?.className).toBe("Broken");
+    } finally {
+      await close();
+    }
+  });
+
+  it("validate_pattern rejects Group C patterns with isError=true", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const result = await client.callTool({
+        name: "validate_pattern",
+        arguments: { source: "export class C {}", pattern: "prototype" },
+      });
+      expect(result.isError).toBe(true);
+      const content = result.content as Array<{ type: string; text: string }>;
+      expect(content[0]?.text ?? "").toMatch(/No validator/);
     } finally {
       await close();
     }

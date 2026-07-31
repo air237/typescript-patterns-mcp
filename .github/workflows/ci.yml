@@ -73,6 +73,7 @@ jobs:
               echo '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"pattern_examples","arguments":{"pattern":"singleton"}}}'
               echo '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"generate_pattern","arguments":{"pattern":"singleton","typeName":"AuditLogger"}}}'
               echo '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"detect_pattern","arguments":{"source":"export class L { static #instance: L | undefined; private constructor() {} static getInstance(): L { L.#instance ??= new L(); return L.#instance; } }"}}}'
+              echo '{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"validate_pattern","arguments":{"source":"export class Broken { public constructor() {} static getInstance(): Broken { return new Broken(); } }","pattern":"singleton"}}}'
               sleep 2
             ) | node dist/index.js 2>/dev/null
           )
@@ -83,17 +84,20 @@ jobs:
           echo "$out" | grep -q '"name":"pattern_examples"'
           echo "$out" | grep -q '"name":"generate_pattern"'
           echo "$out" | grep -q '"name":"detect_pattern"'
-          # `count` / `fileCount` / `detectionCount` live inside a JSON-string
-          # content block, so they show up escaped as \"...\":N in the outer
-          # envelope.
+          echo "$out" | grep -q '"name":"validate_pattern"'
+          # `count` / `fileCount` / `detectionCount` / severity counts live
+          # inside JSON-string content blocks — they show up escaped in
+          # the outer JSON-RPC envelope.
           echo "$out" | grep -q '\\"count\\":23'
           echo "$out" | grep -q '\\"fileCount\\":1'
           echo "$out" | grep -q '\\"pattern\\":\\"Singleton\\"'
           echo "$out" | grep -q '\\"fileName\\":\\"AuditLogger.ts\\"'
           echo "$out" | grep -q 'class AuditLogger'
-          # detect_pattern must find at least one Singleton hit in the L class.
           echo "$out" | grep -q '\\"detectionCount\\":[1-9]'
           echo "$out" | grep -q '\\"className\\":\\"L\\"'
+          # validate_pattern must flag the Broken singleton with >=1 error.
+          echo "$out" | grep -q '\\"errors\\":[1-9]'
+          echo "$out" | grep -q '\\"severity\\":\\"ERROR\\"'
 
       - name: Upload dist/ (Node ${{ matrix.node }})
         if: success()

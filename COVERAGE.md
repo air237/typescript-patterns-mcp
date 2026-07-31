@@ -44,31 +44,31 @@ out of scope (see "Strategic grouping" above).
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Singleton | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| Builder | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| Factory Method | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| Observer | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| Strategy | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| Decorator | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| State | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| Command | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| Adapter | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| Composite | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| Proxy | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| Template Method | ✅ | ✅ | ✅ | ⛔ | ⛔ |
-| **Group A subtotals** | **12/12** | **12/12** | **12/12** | **0/12** | **0/12** |
+| Singleton | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| Builder | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| Factory Method | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| Observer | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| Strategy | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| Decorator | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| State | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| Command | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| Adapter | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| Composite | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| Proxy | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| Template Method | ✅ | ✅ | ✅ | ✅ | ⛔ |
+| **Group A subtotals** | **12/12** | **12/12** | **12/12** | **12/12** | **0/12** |
 
 ### B — generate + detect + validate (refactor stays out of scope)
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Abstract Factory | ✅ | ✅ | ✅ | ⛔ | ⚪ |
-| Bridge | ✅ | ✅ | ✅ | ⛔ | ⚪ |
-| Facade | ✅ | ✅ | ✅ | ⛔ | ⚪ |
-| Visitor | ✅ | ✅ | ✅ | ⛔ | ⚪ |
-| Chain of Responsibility | ✅ | ✅ | ✅ | ⛔ | ⚪ |
-| Mediator | ✅ | ✅ | ✅ | ⛔ | ⚪ |
-| **Group B subtotals** | **6/6** | **6/6** | **6/6** | **0/6** | – |
+| Abstract Factory | ✅ | ✅ | ✅ | ✅ | ⚪ |
+| Bridge | ✅ | ✅ | ✅ | ✅ | ⚪ |
+| Facade | ✅ | ✅ | ✅ | ✅ | ⚪ |
+| Visitor | ✅ | ✅ | ✅ | ✅ | ⚪ |
+| Chain of Responsibility | ✅ | ✅ | ✅ | ✅ | ⚪ |
+| Mediator | ✅ | ✅ | ✅ | ✅ | ⚪ |
+| **Group B subtotals** | **6/6** | **6/6** | **6/6** | **6/6** | – |
 
 ### C — examples-only by design (extended with detect + generate)
 
@@ -90,12 +90,13 @@ out of scope (see "Strategic grouping" above).
 | `pattern_examples` | 23 | 23 | 100% | `resources/examples/<slug>/` directories, indexed by `resources/examples/examples-index.json` |
 | `generate_pattern` | 23 | 23 | 100% | `resources/templates/<slug>/` directories, indexed by `resources/templates/<slug>/template-index.json` per pattern; declared in `SUPPORTED_PATTERNS` in `src/generate/patternGenerator.ts` |
 | `detect_pattern` | 23 | 23 | 100% | `PatternDetectionEngine` detector list in `src/detect/patternDetectionEngine.ts`; per-pattern detectors under `src/detect/detectors/` |
-| `validate_pattern` | 0 | 18 | 0% | `PatternValidationEngine` validators list |
+| `validate_pattern` | 18 | 18 | 100% | `PatternValidationEngine` validators list in `src/validate/patternValidationEngine.ts`; per-pattern validators under `src/validate/validators/` (Group C excluded by design) |
 | `refactor_to_pattern` | 0 | – | 0% | `RefactoringId` enum |
 
-> **🎉 `pattern_examples`, `generate_pattern` AND `detect_pattern` are now
-> 23/23 — full parity with `java-patterns-mcp`.** The full pipeline
-> (canonical example → template → AST detection) is closed for every
+> **🎉 `pattern_examples`, `generate_pattern`, `detect_pattern` AND
+> `validate_pattern` are now at full-target coverage — parity with the
+> Java sibling.** The four-tool pipeline (canonical example → template →
+> AST detection → quality validation) is closed for every applicable
 > Gang-of-Four pattern. Automated checks:
 >   - `test/catalog/examplesCompile.test.ts` — the 74 bundled examples
 >     type-check under `tsc --strict --noEmit`.
@@ -103,6 +104,12 @@ out of scope (see "Strategic grouping" above).
 >     generated output type-checks under the same tsconfig.
 >   - `test/detect/detectorCoverage.test.ts` — each pattern's canonical
 >     example triggers its own detector at confidence >= 0.50.
+>   - `test/validate/canonicalCleanTest.test.ts` — each pattern's
+>     canonical example produces zero ERROR-severity issues from its
+>     own validator.
+>   - `test/validate/antiPatterns.test.ts` — for each of the 18
+>     validators, a deliberately broken snippet produces at least one
+>     issue of the expected severity.
 
 ---
 
@@ -226,9 +233,39 @@ Deltas vs. the Java sibling:
 
 ### Phase 9 — `validate_pattern`
 
-Rule-based quality checks that fire only on already-detected pattern
-instances, so validators never contribute false positives on random
-classes. Same 3-then-6 rollout plan as the Java sibling.
+✅ Complete for all 18 patterns in Group A + Group B (12 + 6). Group C
+patterns (Prototype, Flyweight, Interpreter, Iterator, Memento) are
+intentionally out of scope — there is no widely-agreed "wrong
+Prototype" or "wrong Iterator" heuristic that would carry its weight.
+
+Deltas vs. the Java sibling:
+  - Java-specific rules dropped as inapplicable to TS:
+    - Singleton `Serializable` / `readResolve()` — TS has no
+      `Serializable` marker; serialization is JSON at caller's
+      option.
+    - `synchronized` / `volatile` — the JS event loop is
+      single-threaded; there is no double-checked-locking anti-pattern
+      to catch.
+    - Reflective bypass via `setAccessible(true)` — TS has no
+      equivalent (`Reflect.construct` etc. is different in kind).
+  - TS-specific rules added:
+    - Singleton without `Object.freeze(this)` and no `readonly`
+      fields → INFO. The nearest analogue to Java's readResolve rule.
+    - Composite / Adapter / Bridge / Decorator / Proxy require the
+      wrapped / delegate / children field to be `readonly`. TS's
+      `#private` fields count as acceptably locked too because
+      they cannot be reassigned from outside.
+    - State's "state field is not private" rule accepts both
+      `#state` (ES private) and `private state` (TS soft private).
+  - Group A / Group B split identical to Java: Group C stays
+    validator-less because a rule that fires only occasionally on
+    Prototype code has bad signal-to-noise.
+
+Standalone validators (Java-parity architecture): each validator
+gates on structural shape ("does this class LOOK like the target
+pattern?") and stays silent otherwise. This lets `validate_pattern`
+run unconditionally on random code without generating noise on
+non-pattern classes.
 
 ### Phase 10 — `refactor_to_pattern`
 

@@ -32,4 +32,10 @@ export {
   parseInput,
 } from "./detectPatternTool.js";
 
+export {
+  VALIDATE_PATTERN_TOOL_NAME,
+  createValidatePatternTool,
+  handleValidatePattern,
+} from "./validatePatternTool.js";
+
 export { type McpToolModule } from "./mcpToolModule.js";

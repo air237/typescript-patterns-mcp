@@ -15,6 +15,7 @@ import {
   createListPatternsTool,
   createPatternExamplesTool,
   createPingTool,
+  createValidatePatternTool,
   type McpToolModule,
 } from "./tools/index.js";
 
@@ -51,6 +52,7 @@ export function buildServer(): McpServer {
   const patternExamples = createPatternExamplesTool();
   const generatePattern = createGeneratePatternTool();
   const detectPattern = createDetectPatternTool();
+  const validatePattern = createValidatePatternTool();
 
   const modules: readonly McpToolModule[] = [
     ping,
@@ -58,6 +60,7 @@ export function buildServer(): McpServer {
     patternExamples,
     generatePattern,
     detectPattern,
+    validatePattern,
   ];
   for (const mod of modules) {
     mod.register(server);

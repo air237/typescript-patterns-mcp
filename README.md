@@ -41,7 +41,7 @@ made ergonomic).
 | 4–6 | `pattern_examples` tool — canonical, tsc-tested examples for all 23 patterns | ✅ all 23 patterns |
 | 7  | `generate_pattern` tool — templates for all 23 patterns (Java Phase 7 + 11 collapsed) | ✅ all 23 patterns |
 | 8  | `detect_pattern` (ts-morph AST detectors) — all 23 patterns | ✅ all 23 patterns |
-| 9  | `validate_pattern` (pattern-specific rules) | ⏳ planned |
+| 9  | `validate_pattern` — Group A + Group B (18 patterns; Group C intentionally out of scope) | ✅ 18/18 |
 | 10 | `refactor_to_pattern` (atomic AST rewrites) | ⏳ planned |
 | 11 | Broadened coverage across all 3 groups | ✅ folded into Phase 7 |
 | 12 | GitHub Actions CI (Node 20, `npm ci`, `tsc`, Vitest) | ✅ done |
@@ -73,7 +73,7 @@ npm run build
 # produces: dist/index.js  (with a #!/usr/bin/env node shebang, exec bit set)
 ```
 
-## Try it (Phases 1–8 — `ping`, `list_patterns`, `pattern_examples`, `generate_pattern` and `detect_pattern` are wired)
+## Try it (Phases 1–9 — `ping`, `list_patterns`, `pattern_examples`, `generate_pattern`, `detect_pattern` and `validate_pattern` are wired)
 
 After `npm run build`, smoke-test directly with shell-piped JSON-RPC.
 Note: the `(... ; sleep N)` wrapper keeps stdin open long enough for the
@@ -88,13 +88,14 @@ transport to flush each `tools/call` response.
   echo '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"pattern_examples","arguments":{"pattern":"singleton"}}}'
   echo '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"generate_pattern","arguments":{"pattern":"singleton","typeName":"AuditLogger"}}}'
   echo '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"detect_pattern","arguments":{"source":"export class L { static #instance: L | undefined; private constructor() {} static getInstance(): L { L.#instance ??= new L(); return L.#instance; } }"}}}'
+  echo '{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"validate_pattern","arguments":{"source":"export class Broken { public constructor() {} static getInstance(): Broken { return new Broken(); } }","pattern":"singleton"}}}'
   sleep 2
 ) | node dist/index.js
 ```
 
-Expected: seven JSON-RPC responses on stdout — the last one a
-`detect_pattern` result flagging the inline source as `Singleton`
-with confidence ≥ 0.75.
+Expected: eight JSON-RPC responses on stdout — the last one a
+`validate_pattern` result flagging the `Broken` class with an ERROR
+issue about the public constructor.
 
 ## Wire into OpenCode
 
@@ -138,20 +139,21 @@ typescript-patterns-mcp/
 │   ├── catalog/                     ← Pattern union + metadata + registry + examples loader
 │   ├── generate/                    ← PatternGenerator + template rendering
 │   ├── detect/                      ← PatternDetectionEngine + 23 ts-morph AST detectors
+│   ├── validate/                    ← PatternValidationEngine + 18 ts-morph rule validators
 │   ├── tools/                       ← MCP tool handlers
 │   │   ├── pingTool.ts              ← ✅ Phase 1
 │   │   ├── listPatternsTool.ts      ← ✅ Phase 3
 │   │   ├── patternExamplesTool.ts   ← ✅ Phase 4-6
 │   │   ├── generatePatternTool.ts   ← ✅ Phase 7 (23/23)
 │   │   ├── detectPatternTool.ts     ← ✅ Phase 8 (23/23)
-│   │   ├── validatePatternTool.ts   ← Phase 9 (planned)
+|   │   ├── validatePatternTool.ts   ← ✅ Phase 9 (18/18)
 │   │   └── refactorToPatternTool.ts ← Phase 10 (planned)
-│   ├── validate/                    ← pattern-specific rules (Phase 9+)
 │   └── refactor/                    ← atomic AST rewrites (Phase 10+)
 └── test/
     ├── catalog/                     ← registry / metadata / examples-loader / tsc-compile tests
     ├── detect/                      ← PatternDetectionEngine + detectorCoverage (23-pattern lakmus) tests
     ├── generate/                    ← PatternGenerator + generatedCompile tests
+    ├── validate/                    ← canonical-clean + anti-pattern + engine tests
     └── tools/                       ← tool-level tests + full stdio integration test
 ```
 
