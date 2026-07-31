@@ -1,0 +1,24 @@
+import { ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * Flyweight factory — returns a shared `${TYPE_NAME}` per (label, color)
+ * key. Two callers asking for the same tuple receive the SAME reference.
+ * That is the whole memory-saving contract.
+ */
+export class ${TYPE_NAME}Factory {
+  static readonly #cache = new Map<string, ${TYPE_NAME}>();
+
+  static get(label: string, color: string): ${TYPE_NAME} {
+    const key = `\${label}|\${color}`;
+    let existing = ${TYPE_NAME}Factory.#cache.get(key);
+    if (existing === undefined) {
+      existing = new ${TYPE_NAME}(label, color);
+      ${TYPE_NAME}Factory.#cache.set(key, existing);
+    }
+    return existing;
+  }
+
+  static poolSize(): number {
+    return ${TYPE_NAME}Factory.#cache.size;
+  }
+}

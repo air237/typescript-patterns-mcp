@@ -1,0 +1,9 @@
+/**
+ * Shared surface — both the real subject and the proxy implement it, so
+ * the caller never distinguishes between them. Note: unrelated to
+ * JavaScript's built-in `Proxy` primitive (which is one valid vehicle
+ * for implementing this pattern, but a distinct concept).
+ */
+export interface ${TYPE_NAME} {
+  fetch(key: string): string;
+}

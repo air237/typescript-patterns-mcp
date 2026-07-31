@@ -39,7 +39,7 @@ describe("MCP server integration (in-memory)", () => {
     };
   }
 
-  it("advertises the ping, list_patterns and pattern_examples tools via tools/list", async () => {
+  it("advertises the ping, list_patterns, pattern_examples and generate_pattern tools via tools/list", async () => {
     const { client, close } = await connectClientAndServer();
     try {
       const tools = await client.listTools();
@@ -47,7 +47,8 @@ describe("MCP server integration (in-memory)", () => {
       expect(names).toContain("ping");
       expect(names).toContain("list_patterns");
       expect(names).toContain("pattern_examples");
-      expect(names).toHaveLength(3);
+      expect(names).toContain("generate_pattern");
+      expect(names).toHaveLength(4);
     } finally {
       await close();
     }
@@ -66,6 +67,7 @@ describe("MCP server integration (in-memory)", () => {
       expect(text).toContain("ping");
       expect(text).toContain("list_patterns");
       expect(text).toContain("pattern_examples");
+      expect(text).toContain("generate_pattern");
     } finally {
       await close();
     }
@@ -189,6 +191,48 @@ describe("MCP server integration (in-memory)", () => {
       expect(result.isError).toBe(true);
       const content = result.content as Array<{ type: string; text: string }>;
       expect(content[0]?.text ?? "").toMatch(/Unknown pattern/);
+    } finally {
+      await close();
+    }
+  });
+
+  it("generates a Singleton via generate_pattern with typeName='AuditLogger'", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const result = await client.callTool({
+        name: "generate_pattern",
+        arguments: { pattern: "singleton", typeName: "AuditLogger" },
+      });
+      expect(result.isError).toBeFalsy();
+      const content = result.content as Array<{ type: string; text: string }>;
+      const payload = JSON.parse(content[0]!.text) as {
+        pattern: string;
+        category: string;
+        fileCount: number;
+        files: Array<{ fileName: string; source: string }>;
+      };
+      expect(payload.pattern).toBe("Singleton");
+      expect(payload.category).toBe("Creational");
+      expect(payload.fileCount).toBe(1);
+      expect(payload.files[0]?.fileName).toBe("AuditLogger.ts");
+      expect(payload.files[0]?.source).toMatch(/export class AuditLogger /);
+      expect(payload.files[0]?.source).toMatch(/private constructor/);
+      expect(payload.files[0]?.source).toMatch(/static getInstance\s*\(/);
+    } finally {
+      await close();
+    }
+  });
+
+  it("rejects non-PascalCase typeName via generate_pattern", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const result = await client.callTool({
+        name: "generate_pattern",
+        arguments: { pattern: "singleton", typeName: "logger" },
+      });
+      expect(result.isError).toBe(true);
+      const content = result.content as Array<{ type: string; text: string }>;
+      expect(content[0]?.text ?? "").toMatch(/PascalCase/);
     } finally {
       await close();
     }

@@ -1,0 +1,20 @@
+import { type ${TYPE_NAME}Memento } from "./${TYPE_NAME}Memento.js";
+
+/**
+ * Caretaker — stores mementos without inspecting them. Plain undo stack.
+ */
+export class ${TYPE_NAME}History {
+  readonly #stack: ${TYPE_NAME}Memento[] = [];
+
+  push(memento: ${TYPE_NAME}Memento): void {
+    this.#stack.push(memento);
+  }
+
+  pop(): ${TYPE_NAME}Memento | null {
+    return this.#stack.pop() ?? null;
+  }
+
+  size(): number {
+    return this.#stack.length;
+  }
+}

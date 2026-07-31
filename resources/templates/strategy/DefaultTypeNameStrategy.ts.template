@@ -1,0 +1,12 @@
+import { type ${TYPE_NAME}Strategy } from "./${TYPE_NAME}Strategy.js";
+
+/**
+ * Default concrete implementation of ${TYPE_NAME}Strategy. Replace the
+ * body of `${TYPE_NAME_CAMEL}()` with the real algorithm.
+ */
+export class Default${TYPE_NAME}Strategy implements ${TYPE_NAME}Strategy {
+  ${TYPE_NAME_CAMEL}(input: string): string {
+    // TODO: implement the default variant.
+    return input;
+  }
+}

@@ -1,0 +1,36 @@
+/**
+ * Class-based Singleton — the GoF-faithful shape (private constructor,
+ * static getInstance()). Preferred over a module-level const because it
+ * preserves the two structural invariants of the pattern:
+ *
+ *   1. The constructor is unreachable to external callers.
+ *   2. There is exactly one instance, exposed through a documented
+ *      static access point.
+ *
+ * Replace the placeholder logic in `#init()` with whatever this singleton
+ * needs to do at construction time (open a connection pool, load a config
+ * file, wire up a logger, etc.).
+ */
+export class ${TYPE_NAME} {
+  static #instance: ${TYPE_NAME} | undefined;
+
+  readonly #createdAtEpochMs: number;
+
+  private constructor() {
+    this.#createdAtEpochMs = Date.now();
+    this.#init();
+  }
+
+  static getInstance(): ${TYPE_NAME} {
+    ${TYPE_NAME}.#instance ??= new ${TYPE_NAME}();
+    return ${TYPE_NAME}.#instance;
+  }
+
+  createdAtEpochMs(): number {
+    return this.#createdAtEpochMs;
+  }
+
+  #init(): void {
+    // TODO: put one-shot initialisation here.
+  }
+}

@@ -1,0 +1,37 @@
+import { type ${TYPE_NAME}Aggregate } from "./${TYPE_NAME}Aggregate.js";
+import { type ${TYPE_NAME}Iterator } from "./${TYPE_NAME}Iterator.js";
+
+/**
+ * Concrete aggregate — a plain list of items. The iterator is a
+ * module-private helper so callers cannot construct one without going
+ * through `iterator()`.
+ */
+class ${TYPE_NAME}ListIterator<T> implements ${TYPE_NAME}Iterator<T> {
+  #cursor = 0;
+
+  constructor(private readonly items: readonly T[]) {}
+
+  hasNext(): boolean {
+    return this.#cursor < this.items.length;
+  }
+
+  next(): T {
+    if (!this.hasNext()) throw new Error("No more elements");
+    const value = this.items[this.#cursor]!;
+    this.#cursor += 1;
+    return value;
+  }
+}
+
+export class ${TYPE_NAME}List<T> implements ${TYPE_NAME}Aggregate<T> {
+  readonly #items: T[] = [];
+
+  add(item: T): this {
+    this.#items.push(item);
+    return this;
+  }
+
+  iterator(): ${TYPE_NAME}Iterator<T> {
+    return new ${TYPE_NAME}ListIterator([...this.#items]);
+  }
+}

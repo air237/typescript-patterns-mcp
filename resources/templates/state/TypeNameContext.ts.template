@@ -1,0 +1,19 @@
+import { Default${TYPE_NAME}State } from "./Default${TYPE_NAME}State.js";
+import { type ${TYPE_NAME}State } from "./${TYPE_NAME}State.js";
+
+/**
+ * Context — holds the current state and delegates `tick()` to it.
+ * `#state` is the mutable field the pattern deliberately keeps
+ * private; only `tick()` may rotate it.
+ */
+export class ${TYPE_NAME}Context {
+  #state: ${TYPE_NAME}State = new Default${TYPE_NAME}State();
+
+  currentName(): string {
+    return this.#state.name;
+  }
+
+  tick(): void {
+    this.#state = this.#state.next();
+  }
+}

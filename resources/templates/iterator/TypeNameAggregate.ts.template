@@ -1,0 +1,8 @@
+import { type ${TYPE_NAME}Iterator } from "./${TYPE_NAME}Iterator.js";
+
+/**
+ * Aggregate — yields a fresh iterator on demand.
+ */
+export interface ${TYPE_NAME}Aggregate<T> {
+  iterator(): ${TYPE_NAME}Iterator<T>;
+}

@@ -1,0 +1,18 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+import { type ${TYPE_NAME}Legacy } from "./${TYPE_NAME}Legacy.js";
+
+/**
+ * Object adapter — exposes the ${TYPE_NAME} target surface over a
+ * wrapped ${TYPE_NAME}Legacy adaptee. The wrapped reference is
+ * `readonly` so the adapter cannot be re-pointed mid-life (that's the
+ * `adapter-make-adaptee-readonly` refactoring recipe applied ahead of
+ * time).
+ */
+export class ${TYPE_NAME}Adapter implements ${TYPE_NAME} {
+  constructor(private readonly adaptee: ${TYPE_NAME}Legacy) {}
+
+  serve(): string {
+    // Translate between the two shapes here.
+    return this.adaptee.legacyOperation();
+  }
+}

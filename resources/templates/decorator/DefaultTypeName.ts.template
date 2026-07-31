@@ -1,0 +1,10 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * Concrete component — the plain base behaviour with no wrapping.
+ */
+export class Default${TYPE_NAME} implements ${TYPE_NAME} {
+  run(input: string): string {
+    return input;
+  }
+}

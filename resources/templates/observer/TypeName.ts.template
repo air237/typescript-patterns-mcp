@@ -1,0 +1,8 @@
+/**
+ * Event value object carried by ${TYPE_NAME}Bus. Replace the placeholder
+ * fields with the payload your subscribers actually need.
+ */
+export interface ${TYPE_NAME} {
+  readonly kind: string;
+  readonly at: number;
+}

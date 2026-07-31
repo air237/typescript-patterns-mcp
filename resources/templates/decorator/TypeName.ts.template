@@ -1,0 +1,8 @@
+/**
+ * Component — the shared surface every base and every decorator implements.
+ * Note: this is the GoF Decorator pattern, NOT TypeScript's `@decorator`
+ * language syntax.
+ */
+export interface ${TYPE_NAME} {
+  run(input: string): string;
+}

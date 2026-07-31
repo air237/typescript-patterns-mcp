@@ -1,0 +1,9 @@
+/**
+ * Adaptee — the legacy class with the incompatible surface. In real life
+ * you don't own its source (third-party library, generated code, etc.).
+ */
+export class ${TYPE_NAME}Legacy {
+  legacyOperation(): string {
+    return "legacy result";
+  }
+}

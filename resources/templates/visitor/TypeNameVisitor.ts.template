@@ -1,0 +1,9 @@
+/**
+ * Visitor interface — one `visit*()` overload per concrete element type.
+ * Adding a new visitor implementation is cheap; adding a new element
+ * type requires touching the interface and every visitor.
+ */
+export interface ${TYPE_NAME}Visitor<R> {
+  visitPrimary(el: import("./${TYPE_NAME}Elements.js").Primary${TYPE_NAME}): R;
+  visitSecondary(el: import("./${TYPE_NAME}Elements.js").Secondary${TYPE_NAME}): R;
+}

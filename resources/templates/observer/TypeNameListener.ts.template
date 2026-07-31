@@ -1,0 +1,9 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * Listener contract — implement in your own class or pass an object
+ * literal that satisfies the shape.
+ */
+export interface ${TYPE_NAME}Listener {
+  onEvent(event: ${TYPE_NAME}): void;
+}

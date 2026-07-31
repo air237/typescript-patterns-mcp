@@ -1,0 +1,12 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * Leaf — its size is its own weight.
+ */
+export class ${TYPE_NAME}Leaf implements ${TYPE_NAME} {
+  constructor(private readonly weight: number) {}
+
+  size(): number {
+    return this.weight;
+  }
+}

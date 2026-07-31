@@ -1,0 +1,14 @@
+/**
+ * Opaque memento. The `_snapshot` field is documented as `@internal` and
+ * only the originator (`${TYPE_NAME}`) reads it; the caretaker
+ * (`${TYPE_NAME}History`) treats mementos as opaque tokens.
+ */
+export class ${TYPE_NAME}Memento {
+  /** @internal — only ${TYPE_NAME} may read this. */
+  readonly _snapshot: string;
+
+  constructor(snapshot: string) {
+    this._snapshot = snapshot;
+    Object.freeze(this);
+  }
+}

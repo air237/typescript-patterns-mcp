@@ -1,0 +1,16 @@
+import { type ${TYPE_NAME}Impl } from "./${TYPE_NAME}Impl.js";
+import { ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * Refined abstraction — extends the abstraction with domain-specific
+ * behaviour, still delegating raw work to the injected implementor.
+ */
+export class Refined${TYPE_NAME} extends ${TYPE_NAME} {
+  constructor(impl: ${TYPE_NAME}Impl) {
+    super(impl);
+  }
+
+  override render(): string {
+    return `[refined] \${this.impl.operation()}`;
+  }
+}

@@ -1,0 +1,23 @@
+import { type ${TYPE_NAME}Context } from "./${TYPE_NAME}Context.js";
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/** Terminal expression — resolves a named variable through the context. */
+export class Variable implements ${TYPE_NAME} {
+  constructor(private readonly name: string) {}
+
+  evaluate(ctx: ${TYPE_NAME}Context): number {
+    return ctx.lookup(this.name);
+  }
+}
+
+/** Non-terminal expression — sum of two sub-expressions. */
+export class Add implements ${TYPE_NAME} {
+  constructor(
+    private readonly left: ${TYPE_NAME},
+    private readonly right: ${TYPE_NAME},
+  ) {}
+
+  evaluate(ctx: ${TYPE_NAME}Context): number {
+    return this.left.evaluate(ctx) + this.right.evaluate(ctx);
+  }
+}

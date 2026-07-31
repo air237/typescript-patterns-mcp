@@ -1,0 +1,11 @@
+import { type ${TYPE_NAME}Impl } from "./${TYPE_NAME}Impl.js";
+
+/**
+ * Default concrete implementor. Add more concrete implementors alongside
+ * this one; they don't need to know anything about the abstraction side.
+ */
+export class Default${TYPE_NAME}Impl implements ${TYPE_NAME}Impl {
+  operation(): string {
+    return "default ${TYPE_NAME_LOWERCASE} operation";
+  }
+}

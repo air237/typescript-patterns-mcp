@@ -1,0 +1,16 @@
+/**
+ * Receiver — knows how to perform the actual work. Commands hold a
+ * reference to a receiver and drive it; the receiver has no idea a
+ * Command pattern is in play.
+ */
+export class ${TYPE_NAME}Receiver {
+  readonly log: string[] = [];
+
+  perform(action: string): void {
+    this.log.push(action);
+  }
+
+  revert(): void {
+    this.log.pop();
+  }
+}

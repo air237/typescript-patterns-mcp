@@ -1,0 +1,10 @@
+import { type ${TYPE_NAME}Visitor } from "./${TYPE_NAME}Visitor.js";
+
+/**
+ * Element interface — every concrete element MUST call the matching
+ * `visit*()` overload inside its `accept()` implementation. That
+ * callback is the "double dispatch" the pattern gets its power from.
+ */
+export interface ${TYPE_NAME} {
+  accept<R>(visitor: ${TYPE_NAME}Visitor<R>): R;
+}

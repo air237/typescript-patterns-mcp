@@ -1,0 +1,13 @@
+import { type ${TYPE_NAME}State } from "./${TYPE_NAME}State.js";
+
+/**
+ * Default concrete state — loops back to itself. Add sibling states
+ * and wire their `next()` methods to form the real state graph.
+ */
+export class Default${TYPE_NAME}State implements ${TYPE_NAME}State {
+  readonly name = "default";
+
+  next(): ${TYPE_NAME}State {
+    return new Default${TYPE_NAME}State();
+  }
+}

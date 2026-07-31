@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}Iterator.ts",
+      "template": "TypeNameIterator.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}Aggregate.ts",
+      "template": "TypeNameAggregate.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}List.ts",
+      "template": "TypeNameList.ts.template"
+    }
+  ]
+}

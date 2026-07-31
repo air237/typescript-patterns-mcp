@@ -1,0 +1,23 @@
+/**
+ * Prototype — clones itself without the caller knowing the concrete class.
+ * The copy-constructor idiom (constructor accepts an existing instance
+ * plus a data object) makes `clone()` a one-liner and keeps subclass
+ * chaining ergonomic.
+ */
+export class ${TYPE_NAME} {
+  name: string;
+  quantity: number;
+
+  constructor(source: ${TYPE_NAME} | { name: string; quantity: number }) {
+    this.name = source.name;
+    this.quantity = source.quantity;
+  }
+
+  clone(): ${TYPE_NAME} {
+    return new ${TYPE_NAME}(this);
+  }
+
+  equals(other: ${TYPE_NAME}): boolean {
+    return this.name === other.name && this.quantity === other.quantity;
+  }
+}

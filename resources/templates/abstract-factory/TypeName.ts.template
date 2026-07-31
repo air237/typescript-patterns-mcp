@@ -1,0 +1,16 @@
+/**
+ * Abstract product — one member of the ${TYPE_NAME_CAMEL} family. Add
+ * sibling product interfaces (e.g. `${TYPE_NAME}Aux`) and have the factory
+ * produce all of them consistently.
+ */
+export interface ${TYPE_NAME} {
+  render(): string;
+}
+
+/**
+ * Abstract sibling product — declared here for brevity; move to its own
+ * file if the family grows.
+ */
+export interface ${TYPE_NAME}Aux {
+  describe(): string;
+}

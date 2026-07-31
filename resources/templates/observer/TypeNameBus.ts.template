@@ -1,0 +1,29 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+import { type ${TYPE_NAME}Listener } from "./${TYPE_NAME}Listener.js";
+
+/**
+ * Subject — subscribe / unsubscribe / publish. `publish()` iterates over a
+ * snapshot (`[...listeners]`) so a listener that unsubscribes itself
+ * during dispatch never breaks the iteration.
+ */
+export class ${TYPE_NAME}Bus {
+  readonly #listeners: Array<${TYPE_NAME}Listener> = [];
+
+  subscribe(listener: ${TYPE_NAME}Listener): () => void {
+    this.#listeners.push(listener);
+    return () => {
+      const idx = this.#listeners.indexOf(listener);
+      if (idx !== -1) this.#listeners.splice(idx, 1);
+    };
+  }
+
+  publish(event: ${TYPE_NAME}): void {
+    for (const l of [...this.#listeners]) {
+      l.onEvent(event);
+    }
+  }
+
+  size(): number {
+    return this.#listeners.length;
+  }
+}

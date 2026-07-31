@@ -1,0 +1,8 @@
+import { type ${TYPE_NAME}Context } from "./${TYPE_NAME}Context.js";
+
+/**
+ * AST node interface — every expression evaluates against a context.
+ */
+export interface ${TYPE_NAME} {
+  evaluate(ctx: ${TYPE_NAME}Context): number;
+}

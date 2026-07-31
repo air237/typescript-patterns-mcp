@@ -1,0 +1,14 @@
+import { ${TYPE_NAME}Handler } from "./${TYPE_NAME}Handler.js";
+
+/**
+ * Concrete handler — accepts requests starting with `OK:` and forwards
+ * everything else. Replace the prefix match with the real predicate.
+ */
+export class Default${TYPE_NAME}Handler extends ${TYPE_NAME}Handler {
+  override handle(request: string): string | null {
+    if (request.startsWith("OK:")) {
+      return `handled(\${request.slice(3)})`;
+    }
+    return this.forward(request);
+  }
+}

@@ -1,0 +1,7 @@
+/**
+ * Target — the interface clients expect. Replace `serve()` with the
+ * operation your caller actually invokes.
+ */
+export interface ${TYPE_NAME} {
+  serve(): string;
+}

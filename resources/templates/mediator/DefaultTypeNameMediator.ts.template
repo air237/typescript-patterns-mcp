@@ -1,0 +1,23 @@
+import { type ${TYPE_NAME}Colleague } from "./${TYPE_NAME}Colleague.js";
+import { type ${TYPE_NAME}Mediator } from "./${TYPE_NAME}Mediator.js";
+
+/**
+ * Concrete mediator — fans messages out to every peer except the
+ * sender. Iterates over a snapshot so a `register()` during dispatch
+ * cannot break the fan-out.
+ */
+export class Default${TYPE_NAME}Mediator implements ${TYPE_NAME}Mediator {
+  readonly transcript: string[] = [];
+  readonly #members: ${TYPE_NAME}Colleague[] = [];
+
+  register(colleague: ${TYPE_NAME}Colleague): void {
+    this.#members.push(colleague);
+  }
+
+  send(from: ${TYPE_NAME}Colleague, text: string): void {
+    this.transcript.push(`\${from.name}: \${text}`);
+    for (const peer of [...this.#members]) {
+      if (peer !== from) peer.receive(from, text);
+    }
+  }
+}

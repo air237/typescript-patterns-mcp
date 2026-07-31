@@ -1,0 +1,26 @@
+import { ${TYPE_NAME}Memento } from "./${TYPE_NAME}Memento.js";
+
+/**
+ * Originator — creates and consumes mementos. `#state` never leaks
+ * through a getter; the only way to observe past state is via a
+ * memento.
+ */
+export class ${TYPE_NAME} {
+  #state = "";
+
+  write(fragment: string): void {
+    this.#state += fragment;
+  }
+
+  state(): string {
+    return this.#state;
+  }
+
+  save(): ${TYPE_NAME}Memento {
+    return new ${TYPE_NAME}Memento(this.#state);
+  }
+
+  restore(memento: ${TYPE_NAME}Memento): void {
+    this.#state = memento._snapshot;
+  }
+}

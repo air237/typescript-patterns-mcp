@@ -1,0 +1,9 @@
+/**
+ * Iterator interface — classic GoF `hasNext()` / `next()`. Distinct
+ * from TypeScript's built-in `Iterator` / `Symbol.iterator`, though the
+ * two solve the same problem at different abstraction levels.
+ */
+export interface ${TYPE_NAME}Iterator<T> {
+  hasNext(): boolean;
+  next(): T;
+}

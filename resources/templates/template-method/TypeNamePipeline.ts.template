@@ -1,0 +1,25 @@
+/**
+ * Abstract template — defines the algorithm skeleton in `process()`.
+ * Subclasses fill in `parse()` and `transform()`; the top-level flow
+ * cannot be rearranged.
+ *
+ * The `template-method-make-final` refactoring recipe (Phase 10) can
+ * emit `Object.freeze(this.constructor.prototype.process)` to hard-lock
+ * this. Marking the method with a `@final` JSDoc for reviewers is a
+ * good habit meanwhile.
+ */
+export abstract class ${TYPE_NAME}Pipeline {
+  /** @final — do not override. */
+  process(raw: string): string {
+    const parsed = this.parse(raw);
+    const transformed = this.transform(parsed);
+    return this.format(transformed);
+  }
+
+  protected abstract parse(raw: string): readonly string[];
+  protected abstract transform(parsed: readonly string[]): readonly string[];
+
+  protected format(items: readonly string[]): string {
+    return items.join(",");
+  }
+}

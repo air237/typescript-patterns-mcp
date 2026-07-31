@@ -1,0 +1,12 @@
+/**
+ * Mediator interface — colleagues talk to each other exclusively
+ * through this. No colleague ever holds a reference to another
+ * colleague.
+ */
+export interface ${TYPE_NAME}Mediator {
+  register(colleague: import("./${TYPE_NAME}Colleague.js").${TYPE_NAME}Colleague): void;
+  send(
+    from: import("./${TYPE_NAME}Colleague.js").${TYPE_NAME}Colleague,
+    text: string,
+  ): void;
+}

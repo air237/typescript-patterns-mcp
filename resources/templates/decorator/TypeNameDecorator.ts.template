@@ -1,0 +1,14 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * Base decorator — holds the wrapped component as `readonly` and forwards
+ * by default. Concrete decorators override to add behaviour on top of the
+ * forwarded call.
+ */
+export abstract class ${TYPE_NAME}Decorator implements ${TYPE_NAME} {
+  constructor(protected readonly wrapped: ${TYPE_NAME}) {}
+
+  run(input: string): string {
+    return this.wrapped.run(input);
+  }
+}

@@ -1,0 +1,9 @@
+/**
+ * Command interface — supports both `execute()` and `undo()` so a
+ * caretaker can drive an undo stack without knowing what any specific
+ * command does.
+ */
+export interface ${TYPE_NAME}Command {
+  execute(): void;
+  undo(): void;
+}

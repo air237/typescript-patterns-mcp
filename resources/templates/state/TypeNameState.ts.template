@@ -1,0 +1,10 @@
+/**
+ * State interface — every concrete state implements this. The context
+ * (`${TYPE_NAME}Context`) delegates behaviour to whichever state is
+ * current. Each state's `next()` returns the state the context should
+ * transition to, so the state graph is authoritative.
+ */
+export interface ${TYPE_NAME}State {
+  readonly name: string;
+  next(): ${TYPE_NAME}State;
+}

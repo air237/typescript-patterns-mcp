@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}.ts",
+      "template": "TypeName.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}Factory.ts",
+      "template": "TypeNameFactory.ts.template"
+    },
+    {
+      "fileName": "Default${TYPE_NAME}Factory.ts",
+      "template": "DefaultTypeNameFactory.ts.template"
+    }
+  ]
+}

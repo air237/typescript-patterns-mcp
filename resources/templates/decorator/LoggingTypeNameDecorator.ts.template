@@ -1,0 +1,14 @@
+import { ${TYPE_NAME}Decorator } from "./${TYPE_NAME}Decorator.js";
+
+/**
+ * Concrete decorator — logs each call before delegating. Stackable with
+ * other decorators, since `super.run(input)` returns to the chain.
+ */
+export class Logging${TYPE_NAME}Decorator extends ${TYPE_NAME}Decorator {
+  readonly log: string[] = [];
+
+  override run(input: string): string {
+    this.log.push(`run(\${input})`);
+    return super.run(input);
+  }
+}

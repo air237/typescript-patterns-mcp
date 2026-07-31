@@ -1,0 +1,8 @@
+/**
+ * Implementor — the low-level implementation surface the abstraction
+ * delegates to. Concrete implementors and concrete abstractions vary
+ * independently.
+ */
+export interface ${TYPE_NAME}Impl {
+  operation(): string;
+}

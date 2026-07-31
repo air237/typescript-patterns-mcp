@@ -1,0 +1,23 @@
+import { type ${TYPE_NAME}Mediator } from "./${TYPE_NAME}Mediator.js";
+
+/**
+ * Colleague base — knows only its mediator. The `mediator` field is
+ * `readonly` so a colleague cannot silently be moved to a different
+ * mediator mid-life.
+ */
+export abstract class ${TYPE_NAME}Colleague {
+  readonly received: string[] = [];
+
+  constructor(
+    readonly name: string,
+    protected readonly mediator: ${TYPE_NAME}Mediator,
+  ) {}
+
+  send(text: string): void {
+    this.mediator.send(this, text);
+  }
+
+  receive(from: ${TYPE_NAME}Colleague, text: string): void {
+    this.received.push(`\${from.name}: \${text}`);
+  }
+}

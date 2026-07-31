@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}Handler.ts",
+      "template": "TypeNameHandler.ts.template"
+    },
+    {
+      "fileName": "Default${TYPE_NAME}Handler.ts",
+      "template": "DefaultTypeNameHandler.ts.template"
+    },
+    {
+      "fileName": "Fallback${TYPE_NAME}Handler.ts",
+      "template": "FallbackTypeNameHandler.ts.template"
+    }
+  ]
+}

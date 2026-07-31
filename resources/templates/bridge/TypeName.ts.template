@@ -1,0 +1,11 @@
+import { type ${TYPE_NAME}Impl } from "./${TYPE_NAME}Impl.js";
+
+/**
+ * Abstraction — holds an implementor via composition, NOT inheritance.
+ * The `impl` field is `readonly` so swapping mid-flight is impossible.
+ */
+export abstract class ${TYPE_NAME} {
+  constructor(protected readonly impl: ${TYPE_NAME}Impl) {}
+
+  abstract render(): string;
+}

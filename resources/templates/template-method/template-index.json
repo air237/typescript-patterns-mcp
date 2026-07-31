@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}Pipeline.ts",
+      "template": "TypeNamePipeline.ts.template"
+    },
+    {
+      "fileName": "Default${TYPE_NAME}Pipeline.ts",
+      "template": "DefaultTypeNamePipeline.ts.template"
+    }
+  ]
+}

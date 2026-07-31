@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}.ts",
+      "template": "TypeName.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}Legacy.ts",
+      "template": "TypeNameLegacy.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}Adapter.ts",
+      "template": "TypeNameAdapter.ts.template"
+    }
+  ]
+}

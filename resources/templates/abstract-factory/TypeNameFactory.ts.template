@@ -1,0 +1,11 @@
+import { type ${TYPE_NAME}, type ${TYPE_NAME}Aux } from "./${TYPE_NAME}.js";
+
+/**
+ * Abstract factory — every concrete implementation MUST produce a
+ * matching pair of ${TYPE_NAME} and ${TYPE_NAME}Aux. The pattern's power
+ * is the compile-time guarantee that the two come from the same family.
+ */
+export interface ${TYPE_NAME}Factory {
+  create${TYPE_NAME}(): ${TYPE_NAME};
+  create${TYPE_NAME}Aux(): ${TYPE_NAME}Aux;
+}

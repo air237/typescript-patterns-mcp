@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}.ts",
+      "template": "TypeName.ts.template"
+    },
+    {
+      "fileName": "Default${TYPE_NAME}.ts",
+      "template": "DefaultTypeName.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}Decorator.ts",
+      "template": "TypeNameDecorator.ts.template"
+    },
+    {
+      "fileName": "Logging${TYPE_NAME}Decorator.ts",
+      "template": "LoggingTypeNameDecorator.ts.template"
+    }
+  ]
+}

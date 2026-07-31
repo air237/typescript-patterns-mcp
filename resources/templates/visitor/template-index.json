@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}Visitor.ts",
+      "template": "TypeNameVisitor.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}.ts",
+      "template": "TypeName.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}Elements.ts",
+      "template": "TypeNameElements.ts.template"
+    }
+  ]
+}

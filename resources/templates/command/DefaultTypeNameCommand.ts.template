@@ -1,0 +1,22 @@
+import { type ${TYPE_NAME}Command } from "./${TYPE_NAME}Command.js";
+import { type ${TYPE_NAME}Receiver } from "./${TYPE_NAME}Receiver.js";
+
+/**
+ * Concrete command — wraps an action against a receiver plus its
+ * matching undo. `readonly` fields keep the command immutable once
+ * constructed.
+ */
+export class Default${TYPE_NAME}Command implements ${TYPE_NAME}Command {
+  constructor(
+    private readonly receiver: ${TYPE_NAME}Receiver,
+    private readonly action: string,
+  ) {}
+
+  execute(): void {
+    this.receiver.perform(this.action);
+  }
+
+  undo(): void {
+    this.receiver.revert();
+  }
+}

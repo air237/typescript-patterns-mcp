@@ -1,0 +1,7 @@
+/**
+ * Common interface uniting leaves and composites. Clients treat a single
+ * leaf and a whole composite identically.
+ */
+export interface ${TYPE_NAME} {
+  size(): number;
+}

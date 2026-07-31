@@ -1,0 +1,20 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+import { ${TYPE_NAME}Factory } from "./${TYPE_NAME}Factory.js";
+
+/**
+ * Concrete creator — supplies a default ${TYPE_NAME} instance. Replace
+ * the returned object with your real domain type.
+ */
+export class Default${TYPE_NAME}Factory extends ${TYPE_NAME}Factory {
+  public constructor() {
+    super();
+  }
+
+  protected override create(): ${TYPE_NAME} {
+    return {
+      render(): string {
+        return "default ${TYPE_NAME_CAMEL}";
+      },
+    };
+  }
+}

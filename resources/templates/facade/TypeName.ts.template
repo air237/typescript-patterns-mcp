@@ -1,0 +1,31 @@
+/**
+ * Facade — a single stable surface that hides three internal subsystems.
+ * The subsystem classes are module-private (not exported) so callers
+ * cannot reach past the facade.
+ */
+
+class SubsystemA {
+  step(): string {
+    return "A";
+  }
+}
+class SubsystemB {
+  step(): string {
+    return "B";
+  }
+}
+class SubsystemC {
+  step(): string {
+    return "C";
+  }
+}
+
+export class ${TYPE_NAME} {
+  readonly #a = new SubsystemA();
+  readonly #b = new SubsystemB();
+  readonly #c = new SubsystemC();
+
+  operate(): string {
+    return [this.#a.step(), this.#b.step(), this.#c.step()].join("");
+  }
+}

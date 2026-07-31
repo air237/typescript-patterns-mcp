@@ -1,0 +1,7 @@
+/**
+ * Product interface — every ${TYPE_NAME_CAMEL} the factory produces
+ * satisfies this shape.
+ */
+export interface ${TYPE_NAME} {
+  render(): string;
+}

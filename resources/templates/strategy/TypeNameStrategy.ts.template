@@ -1,0 +1,15 @@
+/**
+ * Strategy interface — pluggable ${TYPE_NAME_CAMEL} algorithm.
+ *
+ * The interface has one method; if you have exactly one call site, a
+ * callable-type alias would be idiomatic:
+ *
+ *   export type ${TYPE_NAME}Strategy = (input: string) => string;
+ *
+ * The interface form is kept here because it stays recognisable to the
+ * Phase 8 detector and lets you add operations later without breaking
+ * existing implementors.
+ */
+export interface ${TYPE_NAME}Strategy {
+  ${TYPE_NAME_CAMEL}(input: string): string;
+}

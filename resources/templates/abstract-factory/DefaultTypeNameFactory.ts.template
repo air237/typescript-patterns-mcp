@@ -1,0 +1,26 @@
+import { type ${TYPE_NAME}, type ${TYPE_NAME}Aux } from "./${TYPE_NAME}.js";
+import { type ${TYPE_NAME}Factory } from "./${TYPE_NAME}Factory.js";
+
+/**
+ * Concrete factory — produces a matching pair of default products.
+ * Add more concrete factories for other product families.
+ */
+class Default${TYPE_NAME} implements ${TYPE_NAME} {
+  render(): string {
+    return "default ${TYPE_NAME_CAMEL}";
+  }
+}
+class Default${TYPE_NAME}Aux implements ${TYPE_NAME}Aux {
+  describe(): string {
+    return "default ${TYPE_NAME_CAMEL} aux";
+  }
+}
+
+export class Default${TYPE_NAME}Factory implements ${TYPE_NAME}Factory {
+  create${TYPE_NAME}(): ${TYPE_NAME} {
+    return new Default${TYPE_NAME}();
+  }
+  create${TYPE_NAME}Aux(): ${TYPE_NAME}Aux {
+    return new Default${TYPE_NAME}Aux();
+  }
+}

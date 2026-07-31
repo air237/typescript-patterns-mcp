@@ -1,0 +1,11 @@
+import { ${TYPE_NAME}Handler } from "./${TYPE_NAME}Handler.js";
+
+/**
+ * Fallback handler — final link in the chain. Never forwards; instead
+ * returns a diagnostic string when the request reached this far.
+ */
+export class Fallback${TYPE_NAME}Handler extends ${TYPE_NAME}Handler {
+  override handle(request: string): string | null {
+    return `unhandled(\${request})`;
+  }
+}

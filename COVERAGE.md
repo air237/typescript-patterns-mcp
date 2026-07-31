@@ -44,42 +44,42 @@ out of scope (see "Strategic grouping" above).
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Singleton | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Builder | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Factory Method | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Observer | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Strategy | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Decorator | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| State | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Command | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Adapter | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Composite | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Proxy | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Template Method | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
-| **Group A subtotals** | **12/12** | **0/12** | **0/12** | **0/12** | **0/12** |
+| Singleton | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| Builder | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| Factory Method | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| Observer | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| Strategy | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| Decorator | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| State | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| Command | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| Adapter | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| Composite | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| Proxy | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| Template Method | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
+| **Group A subtotals** | **12/12** | **12/12** | **0/12** | **0/12** | **0/12** |
 
 ### B — generate + detect + validate (refactor stays out of scope)
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Abstract Factory | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
-| Bridge | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
-| Facade | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
-| Visitor | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
-| Chain of Responsibility | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
-| Mediator | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
-| **Group B subtotals** | **6/6** | **0/6** | **0/6** | **0/6** | – |
+| Abstract Factory | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
+| Bridge | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
+| Facade | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
+| Visitor | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
+| Chain of Responsibility | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
+| Mediator | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
+| **Group B subtotals** | **6/6** | **6/6** | **0/6** | **0/6** | – |
 
 ### C — examples-only by design (extended with detect + generate)
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Prototype | ✅ | ⛔ | ⛔ | ⚪ | ⚪ |
-| Flyweight | ✅ | ⛔ | ⛔ | ⚪ | ⚪ |
-| Interpreter | ✅ | ⛔ | ⛔ | ⚪ | ⚪ |
-| Iterator | ✅ | ⛔ | ⛔ | ⚪ | ⚪ |
-| Memento | ✅ | ⛔ | ⛔ | ⚪ | ⚪ |
-| **Group C subtotals** | **5/5** | **0/5** | **0/5** | – | – |
+| Prototype | ✅ | ✅ | ⛔ | ⚪ | ⚪ |
+| Flyweight | ✅ | ✅ | ⛔ | ⚪ | ⚪ |
+| Interpreter | ✅ | ✅ | ⛔ | ⚪ | ⚪ |
+| Iterator | ✅ | ✅ | ⛔ | ⚪ | ⚪ |
+| Memento | ✅ | ✅ | ⛔ | ⚪ | ⚪ |
+| **Group C subtotals** | **5/5** | **5/5** | **0/5** | – | – |
 
 ---
 
@@ -88,15 +88,20 @@ out of scope (see "Strategic grouping" above).
 | Tool | Implemented | Out of 23 | % | Source of truth (once wired) |
 |---|---:|---:|---:|---|
 | `pattern_examples` | 23 | 23 | 100% | `resources/examples/<slug>/` directories, indexed by `resources/examples/examples-index.json` |
-| `generate_pattern` | 0 | 23 | 0% | `PatternGenerator.SUPPORTED` |
+| `generate_pattern` | 23 | 23 | 100% | `resources/templates/<slug>/` directories, indexed by `resources/templates/<slug>/template-index.json` per pattern; declared in `SUPPORTED_PATTERNS` in `src/generate/patternGenerator.ts` |
 | `detect_pattern` | 0 | 23 | 0% | `PatternDetectionEngine` detectors list |
 | `validate_pattern` | 0 | 18 | 0% | `PatternValidationEngine` validators list |
 | `refactor_to_pattern` | 0 | – | 0% | `RefactoringId` enum |
 
-> **🎉 `pattern_examples` is now 23/23 — full parity with `java-patterns-mcp`.**
-> Every example type-checks under `tsc --strict --noEmit`; the check is
-> automated by `test/catalog/examplesCompile.test.ts` (the sibling of the
-> Java `PatternExamplesCompileTest`).
+> **🎉 `pattern_examples` AND `generate_pattern` are now 23/23 — full parity
+> with `java-patterns-mcp`.** Both the bundled examples AND every
+> template's generated output type-check under `tsc --strict --noEmit`.
+> The checks are automated:
+>   - `test/catalog/examplesCompile.test.ts` compiles the 74 bundled
+>     example sources.
+>   - `test/generate/generatedCompile.test.ts` generates every pattern
+>     with `typeName="Widget"` into a temp dir and compiles all 61
+>     produced files with the same strict tsconfig.
 
 ---
 
@@ -158,10 +163,32 @@ TS-specific deltas vs. the Java sibling:
 
 ### Phase 7 — `generate_pattern`
 
-Start with Group A (5 patterns: Singleton, Builder, Strategy, Observer,
-Factory Method) — same starter set as the Java sibling. Template
-engine: plain TypeScript template strings + a small `renderTemplate`
-helper. No JTE-equivalent for TS is worth the dependency weight.
+✅ Complete for all 23 patterns. The Java sibling documented Phase 7
+as "Group A starter" (5 patterns) and only reached 23/23 through the
+Phase 11 broadening milestone. The TypeScript port collapses the two
+into a single roll-out because the template engine here is a plain
+`${KEY}` scan (no JTE, no additional dependency), so adding a pattern
+is nearly free after the first one.
+
+Deltas vs. the Java sibling:
+  - No `packageName` / `PACKAGE_DECL` placeholders — TS modules have
+    no package declaration. The tool's input schema is therefore just
+    `{ pattern, typeName }`.
+  - Additional placeholders: `${TYPE_NAME_CAMEL}` (lower-first) and
+    `${TYPE_NAME_LOWERCASE}`. These are needed because TS uses the
+    same identifier space for classes and their methods / module
+    names, so a Strategy's method name conventionally camel-cases the
+    class name.
+  - Template escape rule: `\${…}` in a template renders as a literal
+    `${…}` in the output (backslash consumed). This is necessary
+    because TypeScript templates frequently contain real template
+    literals inside backtick strings, and the naive Java-style scan
+    would eat them.
+  - Strict PascalCase validation on `typeName` (`^[A-Z][A-Za-z0-9]*$`).
+    The Java sibling accepts any Java identifier; the TS variant is
+    stricter because every bundled example uses class-name conventions
+    and mixing in `_x`, `$x`, or leading-digit names would produce
+    generated code that most linters reject.
 
 ### Phase 8 — `detect_pattern`
 

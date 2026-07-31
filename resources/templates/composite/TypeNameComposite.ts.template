@@ -1,0 +1,25 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * Composite — a container that recursively sums the size of its children.
+ * The `#children` field is `readonly` (the array reference cannot be
+ * replaced) and the getter returns a `readonly` view.
+ */
+export class ${TYPE_NAME}Composite implements ${TYPE_NAME} {
+  readonly #children: ${TYPE_NAME}[] = [];
+
+  add(child: ${TYPE_NAME}): this {
+    this.#children.push(child);
+    return this;
+  }
+
+  size(): number {
+    let total = 0;
+    for (const c of this.#children) total += c.size();
+    return total;
+  }
+
+  children(): readonly ${TYPE_NAME}[] {
+    return [...this.#children];
+  }
+}

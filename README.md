@@ -39,11 +39,11 @@ made ergonomic).
 | 2 | Pattern catalog model (23 GoF + metadata) | ✅ done |
 | 3 | `list_patterns` tool | ✅ done |
 | 4–6 | `pattern_examples` tool — canonical, tsc-tested examples for all 23 patterns | ✅ all 23 patterns |
-| 7  | `generate_pattern` tool (templates for the Group A patterns) | ⏳ planned |
+| 7  | `generate_pattern` tool — templates for all 23 patterns (Java Phase 7 + 11 collapsed) | ✅ all 23 patterns |
 | 8  | `detect_pattern` (ts-morph AST detectors) | ⏳ planned |
 | 9  | `validate_pattern` (pattern-specific rules) | ⏳ planned |
 | 10 | `refactor_to_pattern` (atomic AST rewrites) | ⏳ planned |
-| 11 | Broadened coverage across all 3 groups | ⏳ planned |
+| 11 | Broadened coverage across all 3 groups | ✅ folded into Phase 7 |
 | 12 | GitHub Actions CI (Node 20, `npm ci`, `tsc`, Vitest) | ✅ done |
 | 13 | npm publication | ⏳ planned |
 
@@ -73,7 +73,7 @@ npm run build
 # produces: dist/index.js  (with a #!/usr/bin/env node shebang, exec bit set)
 ```
 
-## Try it (Phases 1–6 — `ping`, `list_patterns` and `pattern_examples` are wired)
+## Try it (Phases 1–7 — `ping`, `list_patterns`, `pattern_examples` and `generate_pattern` are wired)
 
 After `npm run build`, smoke-test directly with shell-piped JSON-RPC.
 Note: the `(... ; sleep N)` wrapper keeps stdin open long enough for the
@@ -86,13 +86,14 @@ transport to flush each `tools/call` response.
   echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
   echo '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"list_patterns","arguments":{"category":"Creational"}}}'
   echo '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"pattern_examples","arguments":{"pattern":"singleton"}}}'
+  echo '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"generate_pattern","arguments":{"pattern":"singleton","typeName":"AuditLogger"}}}'
   sleep 2
 ) | node dist/index.js
 ```
 
-Expected: five JSON-RPC responses on stdout — the last one a
-`pattern_examples` result with `fileCount: 1` and the canonical
-class-based Singleton source.
+Expected: six JSON-RPC responses on stdout — the last one a
+`generate_pattern` result with `fileCount: 1` and a fully-rendered
+`AuditLogger.ts` source.
 
 ## Wire into OpenCode
 
@@ -128,24 +129,27 @@ typescript-patterns-mcp/
 │   ├── examples/examples-index.json ← manifest of the bundled example files
 │   ├── examples/tsconfig.examples.json ← tsc config the examples are compiled against
 │   ├── examples/<slug>/*.ts         ← canonical examples (23 patterns, 74 files)
-│   └── templates/<slug>/*.ts.tmpl   ← code-generation templates (Phase 7+)
+│   └── templates/<slug>/            ← code-generation templates (23 patterns, 61 .template files)
+│       ├── template-index.json      ← per-pattern manifest ({ files: [{ fileName, template }] })
+│       └── *.ts.template            ← `${TYPE_NAME}` placeholders scanned by PatternGenerator
 ├── src/
 │   ├── index.ts                     ← main() — stdio MCP server
 │   ├── catalog/                     ← Pattern union + metadata + registry + examples loader
+│   ├── generate/                    ← PatternGenerator + template rendering
 │   ├── tools/                       ← MCP tool handlers
 │   │   ├── pingTool.ts              ← ✅ Phase 1
 │   │   ├── listPatternsTool.ts      ← ✅ Phase 3
 │   │   ├── patternExamplesTool.ts   ← ✅ Phase 4-6
-│   │   ├── generatePatternTool.ts   ← Phase 7 (planned)
+│   │   ├── generatePatternTool.ts   ← ✅ Phase 7 (23/23)
 │   │   ├── detectPatternTool.ts     ← Phase 8 (planned)
 │   │   ├── validatePatternTool.ts   ← Phase 9 (planned)
 │   │   └── refactorToPatternTool.ts ← Phase 10 (planned)
-│   ├── generate/                    ← template rendering (Phase 7+)
 │   ├── detect/                      ← ts-morph AST detectors (Phase 8+)
 │   ├── validate/                    ← pattern-specific rules (Phase 9+)
 │   └── refactor/                    ← atomic AST rewrites (Phase 10+)
 └── test/
     ├── catalog/                     ← registry / metadata / examples-loader / tsc-compile tests
+    ├── generate/                    ← PatternGenerator + generatedCompile tests
     └── tools/                       ← tool-level tests + full stdio integration test
 ```
 

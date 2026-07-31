@@ -1,0 +1,20 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * Abstract creator — declares the template method `use()` that consumes
+ * a product produced by the abstract factory method `create()`.
+ * Concrete subclasses provide the concrete product.
+ *
+ * The constructor is `protected` — callers are expected to instantiate
+ * one of the concrete subclasses.
+ */
+export abstract class ${TYPE_NAME}Factory {
+  protected constructor() { /* subclass-only */ }
+
+  use(): string {
+    const product = this.create();
+    return product.render();
+  }
+
+  protected abstract create(): ${TYPE_NAME};
+}

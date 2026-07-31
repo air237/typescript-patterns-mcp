@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}.ts",
+      "template": "TypeName.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}Listener.ts",
+      "template": "TypeNameListener.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}Bus.ts",
+      "template": "TypeNameBus.ts.template"
+    }
+  ]
+}

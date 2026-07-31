@@ -1,0 +1,19 @@
+/**
+ * Flyweight — the immutable, shared intrinsic state. Every `${TYPE_NAME}`
+ * with equal (label, color) is the SAME reference across contexts,
+ * courtesy of the factory's cache.
+ */
+export class ${TYPE_NAME} {
+  readonly label: string;
+  readonly color: string;
+
+  constructor(label: string, color: string) {
+    this.label = label;
+    this.color = color;
+    Object.freeze(this);
+  }
+
+  key(): string {
+    return `\${this.label}|\${this.color}`;
+  }
+}

@@ -16,4 +16,11 @@ export {
   handlePatternExamples,
 } from "./patternExamplesTool.js";
 
+export {
+  GENERATE_PATTERN_TOOL_NAME,
+  createGeneratePatternTool,
+  handleGeneratePattern,
+  isPascalCase,
+} from "./generatePatternTool.js";
+
 export { type McpToolModule } from "./mcpToolModule.js";

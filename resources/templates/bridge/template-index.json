@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}Impl.ts",
+      "template": "TypeNameImpl.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}.ts",
+      "template": "TypeName.ts.template"
+    },
+    {
+      "fileName": "Refined${TYPE_NAME}.ts",
+      "template": "RefinedTypeName.ts.template"
+    },
+    {
+      "fileName": "Default${TYPE_NAME}Impl.ts",
+      "template": "DefaultTypeNameImpl.ts.template"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * Caching proxy — same ${TYPE_NAME} surface, hits the real subject only
+ * on cache miss. The wrapped `subject` field is `readonly` (the
+ * `proxy-make-subject-readonly` refactoring recipe pre-applied).
+ */
+export class ${TYPE_NAME}Proxy implements ${TYPE_NAME} {
+  readonly #cache = new Map<string, string>();
+
+  constructor(private readonly subject: ${TYPE_NAME}) {}
+
+  fetch(key: string): string {
+    let cached = this.#cache.get(key);
+    if (cached === undefined) {
+      cached = this.subject.fetch(key);
+      this.#cache.set(key, cached);
+    }
+    return cached;
+  }
+}

@@ -1,0 +1,13 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * Context — holds extrinsic state plus a reference to the shared
+ * flyweight. Millions of contexts can share a handful of flyweights.
+ */
+export class ${TYPE_NAME}Context {
+  constructor(
+    readonly x: number,
+    readonly y: number,
+    readonly flyweight: ${TYPE_NAME},
+  ) {}
+}

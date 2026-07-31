@@ -1,0 +1,19 @@
+/**
+ * Abstract handler — fluent `setNext()` chain builder and a default
+ * `forward()` implementation that passes the request on. Concrete
+ * handlers override `handle()` and either return a response or forward.
+ */
+export abstract class ${TYPE_NAME}Handler {
+  #next: ${TYPE_NAME}Handler | null = null;
+
+  setNext(next: ${TYPE_NAME}Handler): ${TYPE_NAME}Handler {
+    this.#next = next;
+    return next;
+  }
+
+  abstract handle(request: string): string | null;
+
+  protected forward(request: string): string | null {
+    return this.#next === null ? null : this.#next.handle(request);
+  }
+}

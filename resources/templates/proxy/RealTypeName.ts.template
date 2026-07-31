@@ -1,0 +1,19 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+
+/**
+ * The real subject — pretend each call hits a network or a database.
+ * `callCount` is exposed so callers (and tests) can see when the
+ * proxy short-circuits.
+ */
+export class Real${TYPE_NAME} implements ${TYPE_NAME} {
+  #callCount = 0;
+
+  fetch(key: string): string {
+    this.#callCount += 1;
+    return `[real:\${key}]`;
+  }
+
+  callCount(): number {
+    return this.#callCount;
+  }
+}

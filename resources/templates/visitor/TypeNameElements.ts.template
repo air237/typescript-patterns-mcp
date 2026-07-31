@@ -1,0 +1,24 @@
+import { type ${TYPE_NAME} } from "./${TYPE_NAME}.js";
+import { type ${TYPE_NAME}Visitor } from "./${TYPE_NAME}Visitor.js";
+
+/**
+ * Concrete element — Primary. Its `accept()` calls back to
+ * `visitor.visitPrimary(this)` so the visitor receives the fully-typed
+ * concrete element, not the base ${TYPE_NAME}.
+ */
+export class Primary${TYPE_NAME} implements ${TYPE_NAME} {
+  constructor(readonly value: string) {}
+
+  accept<R>(visitor: ${TYPE_NAME}Visitor<R>): R {
+    return visitor.visitPrimary(this);
+  }
+}
+
+/** Concrete element — Secondary. */
+export class Secondary${TYPE_NAME} implements ${TYPE_NAME} {
+  constructor(readonly value: number) {}
+
+  accept<R>(visitor: ${TYPE_NAME}Visitor<R>): R {
+    return visitor.visitSecondary(this);
+  }
+}

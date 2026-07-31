@@ -1,0 +1,18 @@
+/**
+ * Shared evaluation context — maps variable names to values. Both
+ * terminal and non-terminal expressions read from the same context.
+ */
+export class ${TYPE_NAME}Context {
+  readonly #bindings = new Map<string, number>();
+
+  bind(name: string, value: number): this {
+    this.#bindings.set(name, value);
+    return this;
+  }
+
+  lookup(name: string): number {
+    const v = this.#bindings.get(name);
+    if (v === undefined) throw new Error(`Unbound variable: \${name}`);
+    return v;
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}.ts",
+      "template": "TypeName.ts.template"
+    }
+  ]
+}

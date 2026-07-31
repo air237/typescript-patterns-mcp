@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "fileName": "${TYPE_NAME}.ts",
+      "template": "TypeName.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}Leaf.ts",
+      "template": "TypeNameLeaf.ts.template"
+    },
+    {
+      "fileName": "${TYPE_NAME}Composite.ts",
+      "template": "TypeNameComposite.ts.template"
+    }
+  ]
+}
