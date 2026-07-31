@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # Allow manually re-running the workflow from the Actions tab.
+  workflow_dispatch:
+
+# Cancel in-progress runs on the same branch when a newer commit arrives.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build & test (Node ${{ matrix.node }}, Ubuntu)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['20', '22']
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Show toolchain versions
+        run: |
+          node --version
+          npm --version
+
+      # `npm ci` gives a clean, deterministic install; `--ignore-scripts` is
+      # not passed on purpose — we want any legitimate postinstall hooks
+      # (e.g. from ts-morph) to run.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check (tsc --noEmit)
+        run: npm run typecheck
+
+      - name: Run tests (Vitest)
+        run: npm test
+
+      - name: Build (tsc emit)
+        run: npm run build
+
+      - name: Smoke-test the compiled server over stdio
+        # Repeats the shell-piped JSON-RPC handshake documented in README.md
+        # so CI catches the case where the compiled `dist/index.js` cannot
+        # start or answer `initialize` (regression guard for ESM / shebang /
+        # build-config drift).
+        run: |
+          set -e
+          out=$(
+            (
+              echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"ci-smoke","version":"0.0.1"}}}'
+              echo '{"jsonrpc":"2.0","method":"notifications/initialized"}'
+              echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
+              echo '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"list_patterns","arguments":{}}}'
+              sleep 2
+            ) | node dist/index.js 2>/dev/null
+          )
+          echo "$out"
+          echo "$out" | grep -q '"serverInfo":{"name":"typescript-patterns-mcp"'
+          echo "$out" | grep -q '"name":"ping"'
+          echo "$out" | grep -q '"name":"list_patterns"'
+          # `count` lives inside a JSON-string content block, so it's
+          # escaped as \"count\":23 in the outer JSON-RPC envelope.
+          echo "$out" | grep -q '\\"count\\":23'
+
+      - name: Upload dist/ (Node ${{ matrix.node }})
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: typescript-patterns-mcp-dist-node${{ matrix.node }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14

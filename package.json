@@ -1,0 +1,63 @@
+{
+  "name": "typescript-patterns-mcp",
+  "version": "0.1.0",
+  "description": "MCP server exposing the 23 Gang of Four design patterns to AI coding agents: generation, canonical examples, AST-based detection, validation and anti-pattern refactoring — for TypeScript codebases.",
+  "type": "module",
+  "bin": {
+    "typescript-patterns-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "resources",
+    "LICENSE",
+    "README.md",
+    "COVERAGE.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && chmod +x dist/index.js",
+    "clean": "rm -rf dist coverage .vitest-cache *.tsbuildinfo",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "prepublishOnly": "npm run clean && npm run build && npm test"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "design-patterns",
+    "gang-of-four",
+    "gof",
+    "typescript",
+    "refactoring",
+    "code-analysis",
+    "ast"
+  ],
+  "author": "typescript-patterns-mcp contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/air237/typescript-patterns-mcp.git"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "ts-morph": "^28.0.0",
+    "zod": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.0"
+  }
+}
