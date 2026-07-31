@@ -44,42 +44,42 @@ out of scope (see "Strategic grouping" above).
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Singleton | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Builder | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Factory Method | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Observer | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Strategy | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Decorator | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| State | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Command | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Adapter | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Composite | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Proxy | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| Template Method | ⛔ | ⛔ | ⛔ | ⛔ | ⛔ |
-| **Group A subtotals** | **0/12** | **0/12** | **0/12** | **0/12** | **0/12** |
+| Singleton | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| Builder | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| Factory Method | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| Observer | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| Strategy | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| Decorator | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| State | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| Command | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| Adapter | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| Composite | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| Proxy | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| Template Method | ✅ | ⛔ | ⛔ | ⛔ | ⛔ |
+| **Group A subtotals** | **12/12** | **0/12** | **0/12** | **0/12** | **0/12** |
 
 ### B — generate + detect + validate (refactor stays out of scope)
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Abstract Factory | ⛔ | ⛔ | ⛔ | ⛔ | ⚪ |
-| Bridge | ⛔ | ⛔ | ⛔ | ⛔ | ⚪ |
-| Facade | ⛔ | ⛔ | ⛔ | ⛔ | ⚪ |
-| Visitor | ⛔ | ⛔ | ⛔ | ⛔ | ⚪ |
-| Chain of Responsibility | ⛔ | ⛔ | ⛔ | ⛔ | ⚪ |
-| Mediator | ⛔ | ⛔ | ⛔ | ⛔ | ⚪ |
-| **Group B subtotals** | **0/6** | **0/6** | **0/6** | **0/6** | – |
+| Abstract Factory | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
+| Bridge | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
+| Facade | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
+| Visitor | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
+| Chain of Responsibility | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
+| Mediator | ✅ | ⛔ | ⛔ | ⛔ | ⚪ |
+| **Group B subtotals** | **6/6** | **0/6** | **0/6** | **0/6** | – |
 
 ### C — examples-only by design (extended with detect + generate)
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Prototype | ⛔ | ⛔ | ⛔ | ⚪ | ⚪ |
-| Flyweight | ⛔ | ⛔ | ⛔ | ⚪ | ⚪ |
-| Interpreter | ⛔ | ⛔ | ⛔ | ⚪ | ⚪ |
-| Iterator | ⛔ | ⛔ | ⛔ | ⚪ | ⚪ |
-| Memento | ⛔ | ⛔ | ⛔ | ⚪ | ⚪ |
-| **Group C subtotals** | **0/5** | **0/5** | **0/5** | – | – |
+| Prototype | ✅ | ⛔ | ⛔ | ⚪ | ⚪ |
+| Flyweight | ✅ | ⛔ | ⛔ | ⚪ | ⚪ |
+| Interpreter | ✅ | ⛔ | ⛔ | ⚪ | ⚪ |
+| Iterator | ✅ | ⛔ | ⛔ | ⚪ | ⚪ |
+| Memento | ✅ | ⛔ | ⛔ | ⚪ | ⚪ |
+| **Group C subtotals** | **5/5** | **0/5** | **0/5** | – | – |
 
 ---
 
@@ -87,11 +87,16 @@ out of scope (see "Strategic grouping" above).
 
 | Tool | Implemented | Out of 23 | % | Source of truth (once wired) |
 |---|---:|---:|---:|---|
-| `pattern_examples` | 0 | 23 | 0% | `resources/examples/<slug>/` directories |
+| `pattern_examples` | 23 | 23 | 100% | `resources/examples/<slug>/` directories, indexed by `resources/examples/examples-index.json` |
 | `generate_pattern` | 0 | 23 | 0% | `PatternGenerator.SUPPORTED` |
 | `detect_pattern` | 0 | 23 | 0% | `PatternDetectionEngine` detectors list |
 | `validate_pattern` | 0 | 18 | 0% | `PatternValidationEngine` validators list |
 | `refactor_to_pattern` | 0 | – | 0% | `RefactoringId` enum |
+
+> **🎉 `pattern_examples` is now 23/23 — full parity with `java-patterns-mcp`.**
+> Every example type-checks under `tsc --strict --noEmit`; the check is
+> automated by `test/catalog/examplesCompile.test.ts` (the sibling of the
+> Java `PatternExamplesCompileTest`).
 
 ---
 
@@ -123,11 +128,33 @@ with `java-patterns-mcp`.
 
 ## Roadmap
 
-### Phase 4–6 — `pattern_examples`
+### ✅ Phase 4–6 — `pattern_examples` complete (23/23)
 
-Canonical, `tsc --strict --noEmit`-tested TypeScript examples for all
-23 patterns. Delivered in three roll-outs of ~8 patterns each,
-matching the Java plan.
+Canonical, `tsc --strict --noEmit`-tested TypeScript examples for all 23
+patterns are wired up. Delivered in a single roll-out (Java sibling had
+three: Creational → Structural → Behavioral). Each pattern ships between
+1 and 6 files under `resources/examples/<slug>/` alongside a `note`
+that captures the specific variant chosen (e.g. Singleton uses the
+class-based idiom rather than a module-level const, because only the
+class form preserves the two GoF invariants — private constructor and
+static access point).
+
+TS-specific deltas vs. the Java sibling:
+  - No `packageName` field on the `PatternExample` payload — TS modules
+    have no package declaration, so exposing it would be misleading.
+  - Singleton: class with `private constructor()` and a lazy static
+    `getInstance()`, guarded via `#instance ??=`. Faithful to GoF; a
+    `module-const` variant would be idiomatic ESM but is not a GoF
+    Singleton (public constructor still reachable).
+  - Prototype: copy-constructor + `clone()` overriding, no `Cloneable`
+    interface (there is no such thing in TS).
+  - Strategy: SAM interface form kept for the detector's fingerprint;
+    the callable-type-alias idiom is what the `strategy-narrow-to-function-type`
+    refactoring recipe (Phase 10) will emit.
+  - Decorator's file comment calls out that this is the GoF pattern,
+    NOT TypeScript's `@decorator` syntax.
+  - Facade's subsystems are module-private classes (`export`-less) —
+    the direct analogue of Java's package-private.
 
 ### Phase 7 — `generate_pattern`
 

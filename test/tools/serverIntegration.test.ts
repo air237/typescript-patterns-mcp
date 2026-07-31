@@ -39,14 +39,15 @@ describe("MCP server integration (in-memory)", () => {
     };
   }
 
-  it("advertises the ping and list_patterns tools via tools/list", async () => {
+  it("advertises the ping, list_patterns and pattern_examples tools via tools/list", async () => {
     const { client, close } = await connectClientAndServer();
     try {
       const tools = await client.listTools();
       const names = tools.tools.map((t) => t.name);
       expect(names).toContain("ping");
       expect(names).toContain("list_patterns");
-      expect(names).toHaveLength(2);
+      expect(names).toContain("pattern_examples");
+      expect(names).toHaveLength(3);
     } finally {
       await close();
     }
@@ -64,6 +65,7 @@ describe("MCP server integration (in-memory)", () => {
       expect(text).toContain(SERVER_VERSION);
       expect(text).toContain("ping");
       expect(text).toContain("list_patterns");
+      expect(text).toContain("pattern_examples");
     } finally {
       await close();
     }
@@ -125,6 +127,68 @@ describe("MCP server integration (in-memory)", () => {
       expect(result.isError).toBe(true);
       const content = result.content as Array<{ type: string; text: string }>;
       expect(content[0]?.text ?? "").toMatch(/Invalid.*category|-32602/i);
+    } finally {
+      await close();
+    }
+  });
+
+  it("returns Singleton example source via pattern_examples", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const result = await client.callTool({
+        name: "pattern_examples",
+        arguments: { pattern: "singleton" },
+      });
+      expect(result.isError).toBeFalsy();
+      const content = result.content as Array<{ type: string; text: string }>;
+      const payload = JSON.parse(content[0]!.text) as {
+        pattern: string;
+        category: string;
+        fileCount: number;
+        files: Array<{ fileName: string; note: string; source?: string }>;
+      };
+      expect(payload.pattern).toBe("Singleton");
+      expect(payload.category).toBe("Creational");
+      expect(payload.fileCount).toBe(1);
+      expect(payload.files[0]?.fileName).toBe("Singleton.ts");
+      expect(payload.files[0]?.source).toMatch(/private constructor/);
+    } finally {
+      await close();
+    }
+  });
+
+  it("omits source when pattern_examples is called with includeSource=false", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const result = await client.callTool({
+        name: "pattern_examples",
+        arguments: { pattern: "factory-method", includeSource: false },
+      });
+      expect(result.isError).toBeFalsy();
+      const content = result.content as Array<{ type: string; text: string }>;
+      const payload = JSON.parse(content[0]!.text) as {
+        fileCount: number;
+        files: Array<{ fileName: string; note: string; source?: string }>;
+      };
+      expect(payload.fileCount).toBe(6);
+      for (const f of payload.files) {
+        expect(f.source).toBeUndefined();
+      }
+    } finally {
+      await close();
+    }
+  });
+
+  it("errors on unknown pattern via pattern_examples", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const result = await client.callTool({
+        name: "pattern_examples",
+        arguments: { pattern: "Non-Existent-Pattern" },
+      });
+      expect(result.isError).toBe(true);
+      const content = result.content as Array<{ type: string; text: string }>;
+      expect(content[0]?.text ?? "").toMatch(/Unknown pattern/);
     } finally {
       await close();
     }

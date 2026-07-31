@@ -1,0 +1,489 @@
+{
+  "examples": [
+    {
+      "pattern": "SINGLETON",
+      "files": [
+        {
+          "fileName": "Singleton.ts",
+          "path": "examples/singleton/Singleton.ts",
+          "note": "Class-based Singleton with private constructor and lazy static getInstance() — the GoF shape, preferred over a module-level const because the constructor stays unreachable"
+        }
+      ]
+    },
+    {
+      "pattern": "FACTORY_METHOD",
+      "files": [
+        {
+          "fileName": "Button.ts",
+          "path": "examples/factory-method/Button.ts",
+          "note": "Product interface"
+        },
+        {
+          "fileName": "HtmlButton.ts",
+          "path": "examples/factory-method/HtmlButton.ts",
+          "note": "Concrete product"
+        },
+        {
+          "fileName": "WindowsButton.ts",
+          "path": "examples/factory-method/WindowsButton.ts",
+          "note": "Concrete product"
+        },
+        {
+          "fileName": "Dialog.ts",
+          "path": "examples/factory-method/Dialog.ts",
+          "note": "Abstract creator that defines render() as a template and delegates createButton() to subclasses"
+        },
+        {
+          "fileName": "HtmlDialog.ts",
+          "path": "examples/factory-method/HtmlDialog.ts",
+          "note": "Concrete creator producing HtmlButton"
+        },
+        {
+          "fileName": "WindowsDialog.ts",
+          "path": "examples/factory-method/WindowsDialog.ts",
+          "note": "Concrete creator producing WindowsButton"
+        }
+      ]
+    },
+    {
+      "pattern": "ABSTRACT_FACTORY",
+      "files": [
+        {
+          "fileName": "Button.ts",
+          "path": "examples/abstract-factory/Button.ts",
+          "note": "Abstract product"
+        },
+        {
+          "fileName": "Checkbox.ts",
+          "path": "examples/abstract-factory/Checkbox.ts",
+          "note": "Abstract product — sibling in the same family"
+        },
+        {
+          "fileName": "GUIFactory.ts",
+          "path": "examples/abstract-factory/GUIFactory.ts",
+          "note": "Abstract factory declaring a family (Button + Checkbox)"
+        },
+        {
+          "fileName": "WindowsFactory.ts",
+          "path": "examples/abstract-factory/WindowsFactory.ts",
+          "note": "Concrete factory producing Windows-styled products"
+        },
+        {
+          "fileName": "MacOSFactory.ts",
+          "path": "examples/abstract-factory/MacOSFactory.ts",
+          "note": "Concrete factory producing macOS-styled products"
+        }
+      ]
+    },
+    {
+      "pattern": "BUILDER",
+      "files": [
+        {
+          "fileName": "Car.ts",
+          "path": "examples/builder/Car.ts",
+          "note": "Immutable Car with a fluent Builder, required ctor args + chainable setters + cross-field validation in build()"
+        }
+      ]
+    },
+    {
+      "pattern": "PROTOTYPE",
+      "files": [
+        {
+          "fileName": "Shape.ts",
+          "path": "examples/prototype/Shape.ts",
+          "note": "Abstract base with copy-constructor and clone() contract"
+        },
+        {
+          "fileName": "Circle.ts",
+          "path": "examples/prototype/Circle.ts",
+          "note": "Concrete Shape — chains copy-constructor to super, adds own state (radius)"
+        }
+      ]
+    },
+    {
+      "pattern": "ADAPTER",
+      "files": [
+        {
+          "fileName": "RoundPeg.ts",
+          "path": "examples/adapter/RoundPeg.ts",
+          "note": "Target interface the client expects"
+        },
+        {
+          "fileName": "SquarePeg.ts",
+          "path": "examples/adapter/SquarePeg.ts",
+          "note": "Legacy class with an incompatible API"
+        },
+        {
+          "fileName": "SquarePegAdapter.ts",
+          "path": "examples/adapter/SquarePegAdapter.ts",
+          "note": "Adapter exposing a RoundPeg surface over a wrapped SquarePeg (radius = side*√2/2)"
+        },
+        {
+          "fileName": "RoundHole.ts",
+          "path": "examples/adapter/RoundHole.ts",
+          "note": "Client that only knows about RoundPeg"
+        }
+      ]
+    },
+    {
+      "pattern": "BRIDGE",
+      "files": [
+        {
+          "fileName": "Renderer.ts",
+          "path": "examples/bridge/Renderer.ts",
+          "note": "Implementor interface — low-level drawing API"
+        },
+        {
+          "fileName": "Shape.ts",
+          "path": "examples/bridge/Shape.ts",
+          "note": "Abstraction — holds an implementor via composition, not inheritance"
+        },
+        {
+          "fileName": "Circle.ts",
+          "path": "examples/bridge/Circle.ts",
+          "note": "Refined abstraction"
+        },
+        {
+          "fileName": "Square.ts",
+          "path": "examples/bridge/Square.ts",
+          "note": "Refined abstraction"
+        },
+        {
+          "fileName": "VectorRenderer.ts",
+          "path": "examples/bridge/VectorRenderer.ts",
+          "note": "Concrete implementor — SVG output"
+        },
+        {
+          "fileName": "RasterRenderer.ts",
+          "path": "examples/bridge/RasterRenderer.ts",
+          "note": "Concrete implementor — raster output"
+        }
+      ]
+    },
+    {
+      "pattern": "COMPOSITE",
+      "files": [
+        {
+          "fileName": "Component.ts",
+          "path": "examples/composite/Component.ts",
+          "note": "Common interface uniting leaves and composites"
+        },
+        {
+          "fileName": "Product.ts",
+          "path": "examples/composite/Product.ts",
+          "note": "Leaf with its own cost"
+        },
+        {
+          "fileName": "Box.ts",
+          "path": "examples/composite/Box.ts",
+          "note": "Composite that recursively sums child costs; children field is readonly and getter returns readonly view"
+        }
+      ]
+    },
+    {
+      "pattern": "DECORATOR",
+      "files": [
+        {
+          "fileName": "Notifier.ts",
+          "path": "examples/decorator/Notifier.ts",
+          "note": "Component interface (NB: unrelated to TS @decorator syntax)"
+        },
+        {
+          "fileName": "EmailNotifier.ts",
+          "path": "examples/decorator/EmailNotifier.ts",
+          "note": "Concrete component — base behaviour"
+        },
+        {
+          "fileName": "NotifierDecorator.ts",
+          "path": "examples/decorator/NotifierDecorator.ts",
+          "note": "Base decorator — holds the wrapped Notifier as readonly and forwards by default"
+        },
+        {
+          "fileName": "SmsDecorator.ts",
+          "path": "examples/decorator/SmsDecorator.ts",
+          "note": "Concrete decorator — adds SMS channel on top of any Notifier"
+        },
+        {
+          "fileName": "SlackDecorator.ts",
+          "path": "examples/decorator/SlackDecorator.ts",
+          "note": "Concrete decorator — adds Slack channel; decorators stack"
+        }
+      ]
+    },
+    {
+      "pattern": "FACADE",
+      "files": [
+        {
+          "fileName": "OrderFacade.ts",
+          "path": "examples/facade/OrderFacade.ts",
+          "note": "Single-call placeOrder() hides three private subsystems (inventory, payment, shipping) — subsystems are not exported"
+        }
+      ]
+    },
+    {
+      "pattern": "FLYWEIGHT",
+      "files": [
+        {
+          "fileName": "TreeType.ts",
+          "path": "examples/flyweight/TreeType.ts",
+          "note": "Flyweight — immutable shared intrinsic state (name, texture, colour), Object.freeze-guarded"
+        },
+        {
+          "fileName": "TreeTypeFactory.ts",
+          "path": "examples/flyweight/TreeTypeFactory.ts",
+          "note": "Flyweight factory — returns a shared TreeType per (name, texture, colour) key"
+        },
+        {
+          "fileName": "Tree.ts",
+          "path": "examples/flyweight/Tree.ts",
+          "note": "Context object holding extrinsic state (x, y) plus a reference to the shared flyweight"
+        }
+      ]
+    },
+    {
+      "pattern": "PROXY",
+      "files": [
+        {
+          "fileName": "Service.ts",
+          "path": "examples/proxy/Service.ts",
+          "note": "Shared surface — both real subject and proxy implement it (unrelated to JS built-in Proxy)"
+        },
+        {
+          "fileName": "ExpensiveService.ts",
+          "path": "examples/proxy/ExpensiveService.ts",
+          "note": "The real subject — pretend each call hits a network or a database"
+        },
+        {
+          "fileName": "CachingServiceProxy.ts",
+          "path": "examples/proxy/CachingServiceProxy.ts",
+          "note": "Caching proxy — same Service surface, hits the real one only on cache miss; wrapped subject is readonly"
+        }
+      ]
+    },
+    {
+      "pattern": "CHAIN_OF_RESPONSIBILITY",
+      "files": [
+        {
+          "fileName": "Handler.ts",
+          "path": "examples/chain-of-responsibility/Handler.ts",
+          "note": "Abstract base — fluent setNext() and default forward()"
+        },
+        {
+          "fileName": "AuthHandler.ts",
+          "path": "examples/chain-of-responsibility/AuthHandler.ts",
+          "note": "Concrete handler — accepts AUTH:* requests"
+        },
+        {
+          "fileName": "LoggingHandler.ts",
+          "path": "examples/chain-of-responsibility/LoggingHandler.ts",
+          "note": "Concrete handler — accepts LOG:* requests"
+        }
+      ]
+    },
+    {
+      "pattern": "COMMAND",
+      "files": [
+        {
+          "fileName": "Command.ts",
+          "path": "examples/command/Command.ts",
+          "note": "Command interface — supports execute() and undo()"
+        },
+        {
+          "fileName": "TextEditor.ts",
+          "path": "examples/command/TextEditor.ts",
+          "note": "Receiver — knows how to perform the work"
+        },
+        {
+          "fileName": "AppendCommand.ts",
+          "path": "examples/command/AppendCommand.ts",
+          "note": "Concrete command wrapping an append + its undo"
+        }
+      ]
+    },
+    {
+      "pattern": "INTERPRETER",
+      "files": [
+        {
+          "fileName": "Context.ts",
+          "path": "examples/interpreter/Context.ts",
+          "note": "Shared evaluation context with variable bindings"
+        },
+        {
+          "fileName": "Expression.ts",
+          "path": "examples/interpreter/Expression.ts",
+          "note": "AST node interface — evaluate(Context)"
+        },
+        {
+          "fileName": "Expressions.ts",
+          "path": "examples/interpreter/Expressions.ts",
+          "note": "Terminal Variable + non-terminals And/Or, bundled for brevity"
+        }
+      ]
+    },
+    {
+      "pattern": "ITERATOR",
+      "files": [
+        {
+          "fileName": "CustomIterator.ts",
+          "path": "examples/iterator/CustomIterator.ts",
+          "note": "Iterator interface — GoF hasNext()/next() (distinct from Symbol.iterator idiom)"
+        },
+        {
+          "fileName": "Aggregate.ts",
+          "path": "examples/iterator/Aggregate.ts",
+          "note": "Aggregate interface — yields a CustomIterator"
+        },
+        {
+          "fileName": "NameRoster.ts",
+          "path": "examples/iterator/NameRoster.ts",
+          "note": "Concrete aggregate with a module-private iterator class"
+        }
+      ]
+    },
+    {
+      "pattern": "MEDIATOR",
+      "files": [
+        {
+          "fileName": "ChatMediator.ts",
+          "path": "examples/mediator/ChatMediator.ts",
+          "note": "Mediator interface — send() and register()"
+        },
+        {
+          "fileName": "Colleague.ts",
+          "path": "examples/mediator/Colleague.ts",
+          "note": "Colleague base — knows only its mediator (readonly reference)"
+        },
+        {
+          "fileName": "ChatRoom.ts",
+          "path": "examples/mediator/ChatRoom.ts",
+          "note": "Concrete mediator — fans messages out and logs them"
+        }
+      ]
+    },
+    {
+      "pattern": "MEMENTO",
+      "files": [
+        {
+          "fileName": "DocumentMemento.ts",
+          "path": "examples/memento/DocumentMemento.ts",
+          "note": "Opaque memento — @internal snapshot field, Object.freeze-guarded"
+        },
+        {
+          "fileName": "TextDocument.ts",
+          "path": "examples/memento/TextDocument.ts",
+          "note": "Originator — save() and restore() snapshots of its #text state"
+        },
+        {
+          "fileName": "History.ts",
+          "path": "examples/memento/History.ts",
+          "note": "Caretaker — stores mementos without inspecting them (undo stack)"
+        }
+      ]
+    },
+    {
+      "pattern": "OBSERVER",
+      "files": [
+        {
+          "fileName": "Observer.ts",
+          "path": "examples/observer/Observer.ts",
+          "note": "Observer interface — onEvent(T)"
+        },
+        {
+          "fileName": "EventBus.ts",
+          "path": "examples/observer/EventBus.ts",
+          "note": "Subject — subscribe/unsubscribe/publish, iterates over a snapshot"
+        },
+        {
+          "fileName": "CountingObserver.ts",
+          "path": "examples/observer/CountingObserver.ts",
+          "note": "Concrete observer that records every event it sees"
+        }
+      ]
+    },
+    {
+      "pattern": "STATE",
+      "files": [
+        {
+          "fileName": "LightState.ts",
+          "path": "examples/state/LightState.ts",
+          "note": "State interface"
+        },
+        {
+          "fileName": "GreenState.ts",
+          "path": "examples/state/GreenState.ts",
+          "note": "Concrete state — next() returns Yellow"
+        },
+        {
+          "fileName": "YellowState.ts",
+          "path": "examples/state/YellowState.ts",
+          "note": "Concrete state — next() returns Red"
+        },
+        {
+          "fileName": "RedState.ts",
+          "path": "examples/state/RedState.ts",
+          "note": "Concrete state — next() returns Green"
+        },
+        {
+          "fileName": "TrafficLight.ts",
+          "path": "examples/state/TrafficLight.ts",
+          "note": "Context — delegates tick() behaviour to the current LightState"
+        }
+      ]
+    },
+    {
+      "pattern": "STRATEGY",
+      "files": [
+        {
+          "fileName": "SortStrategy.ts",
+          "path": "examples/strategy/SortStrategy.ts",
+          "note": "Strategy interface — pluggable sort algorithm"
+        },
+        {
+          "fileName": "QuickSortStrategy.ts",
+          "path": "examples/strategy/QuickSortStrategy.ts",
+          "note": "Concrete strategy — ascending numeric order"
+        },
+        {
+          "fileName": "ReverseSortStrategy.ts",
+          "path": "examples/strategy/ReverseSortStrategy.ts",
+          "note": "Concrete strategy — descending numeric order"
+        }
+      ]
+    },
+    {
+      "pattern": "TEMPLATE_METHOD",
+      "files": [
+        {
+          "fileName": "DataPipeline.ts",
+          "path": "examples/template-method/DataPipeline.ts",
+          "note": "Abstract template — process() locks the algorithm structure; subclasses override only the hooks"
+        },
+        {
+          "fileName": "UppercasePipeline.ts",
+          "path": "examples/template-method/UppercasePipeline.ts",
+          "note": "Concrete subclass — fills in only parse() and transform()"
+        }
+      ]
+    },
+    {
+      "pattern": "VISITOR",
+      "files": [
+        {
+          "fileName": "ShapeVisitor.ts",
+          "path": "examples/visitor/ShapeVisitor.ts",
+          "note": "Visitor interface — one visit method per concrete shape"
+        },
+        {
+          "fileName": "Shape.ts",
+          "path": "examples/visitor/Shape.ts",
+          "note": "Element interface — accepts a ShapeVisitor (double dispatch)"
+        },
+        {
+          "fileName": "Shapes.ts",
+          "path": "examples/visitor/Shapes.ts",
+          "note": "Concrete elements (Circle, Square) + sample visitor (SvgRenderer)"
+        }
+      ]
+    }
+  ]
+}

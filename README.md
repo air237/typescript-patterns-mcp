@@ -38,13 +38,13 @@ made ergonomic).
 | 1 | MCP bootstrap + stdio transport + `ping` tool | ✅ done |
 | 2 | Pattern catalog model (23 GoF + metadata) | ✅ done |
 | 3 | `list_patterns` tool | ✅ done |
-| 4–6 | `pattern_examples` tool — canonical, tsc-tested examples for all 23 patterns | ⏳ planned |
+| 4–6 | `pattern_examples` tool — canonical, tsc-tested examples for all 23 patterns | ✅ all 23 patterns |
 | 7  | `generate_pattern` tool (templates for the Group A patterns) | ⏳ planned |
 | 8  | `detect_pattern` (ts-morph AST detectors) | ⏳ planned |
 | 9  | `validate_pattern` (pattern-specific rules) | ⏳ planned |
 | 10 | `refactor_to_pattern` (atomic AST rewrites) | ⏳ planned |
 | 11 | Broadened coverage across all 3 groups | ⏳ planned |
-| 12 | GitHub Actions CI (Node 20, `npm ci`, `tsc`, Vitest) | ⏳ planned |
+| 12 | GitHub Actions CI (Node 20, `npm ci`, `tsc`, Vitest) | ✅ done |
 | 13 | npm publication | ⏳ planned |
 
 ## Tools (target API)
@@ -73,7 +73,7 @@ npm run build
 # produces: dist/index.js  (with a #!/usr/bin/env node shebang, exec bit set)
 ```
 
-## Try it (Phase 3 — `ping` and `list_patterns` are wired)
+## Try it (Phases 1–6 — `ping`, `list_patterns` and `pattern_examples` are wired)
 
 After `npm run build`, smoke-test directly with shell-piped JSON-RPC.
 Note: the `(... ; sleep N)` wrapper keeps stdin open long enough for the
@@ -85,12 +85,14 @@ transport to flush each `tools/call` response.
   echo '{"jsonrpc":"2.0","method":"notifications/initialized"}'
   echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
   echo '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"list_patterns","arguments":{"category":"Creational"}}}'
+  echo '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"pattern_examples","arguments":{"pattern":"singleton"}}}'
   sleep 2
 ) | node dist/index.js
 ```
 
-Expected: four JSON-RPC responses on stdout — the last one a `list_patterns`
-result with `count: 5` and the five canonical Creational patterns.
+Expected: five JSON-RPC responses on stdout — the last one a
+`pattern_examples` result with `fileCount: 1` and the canonical
+class-based Singleton source.
 
 ## Wire into OpenCode
 
@@ -123,26 +125,28 @@ typescript-patterns-mcp/
 ├── LICENSE
 ├── resources/
 │   ├── catalog/patterns.json        ← refactoring.guru-style metadata
-│   ├── examples/<slug>/*.ts         ← canonical examples (Phase 4-6)
+│   ├── examples/examples-index.json ← manifest of the bundled example files
+│   ├── examples/tsconfig.examples.json ← tsc config the examples are compiled against
+│   ├── examples/<slug>/*.ts         ← canonical examples (23 patterns, 74 files)
 │   └── templates/<slug>/*.ts.tmpl   ← code-generation templates (Phase 7+)
 ├── src/
 │   ├── index.ts                     ← main() — stdio MCP server
-│   ├── catalog/                     ← Pattern enum + metadata + registry
+│   ├── catalog/                     ← Pattern union + metadata + registry + examples loader
 │   ├── tools/                       ← MCP tool handlers
-│   │   ├── pingTool.ts
-│   │   ├── listPatternsTool.ts
-│   │   ├── patternExamplesTool.ts   ← Phase 4-6
-│   │   ├── generatePatternTool.ts   ← Phase 7
-│   │   ├── detectPatternTool.ts     ← Phase 8
-│   │   ├── validatePatternTool.ts   ← Phase 9
-│   │   └── refactorToPatternTool.ts ← Phase 10
-│   ├── generate/                    ← template rendering
-│   ├── detect/                      ← ts-morph AST detectors
-│   ├── validate/                    ← pattern-specific rules
-│   └── refactor/                    ← atomic AST rewrites
+│   │   ├── pingTool.ts              ← ✅ Phase 1
+│   │   ├── listPatternsTool.ts      ← ✅ Phase 3
+│   │   ├── patternExamplesTool.ts   ← ✅ Phase 4-6
+│   │   ├── generatePatternTool.ts   ← Phase 7 (planned)
+│   │   ├── detectPatternTool.ts     ← Phase 8 (planned)
+│   │   ├── validatePatternTool.ts   ← Phase 9 (planned)
+│   │   └── refactorToPatternTool.ts ← Phase 10 (planned)
+│   ├── generate/                    ← template rendering (Phase 7+)
+│   ├── detect/                      ← ts-morph AST detectors (Phase 8+)
+│   ├── validate/                    ← pattern-specific rules (Phase 9+)
+│   └── refactor/                    ← atomic AST rewrites (Phase 10+)
 └── test/
-    ├── catalog/                     ← registry / metadata tests
-    └── tools/                       ← tool-level tests
+    ├── catalog/                     ← registry / metadata / examples-loader / tsc-compile tests
+    └── tools/                       ← tool-level tests + full stdio integration test
 ```
 
 ## Design decisions

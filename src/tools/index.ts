@@ -10,4 +10,10 @@ export {
   handleListPatterns,
 } from "./listPatternsTool.js";
 
+export {
+  PATTERN_EXAMPLES_TOOL_NAME,
+  createPatternExamplesTool,
+  handlePatternExamples,
+} from "./patternExamplesTool.js";
+
 export { type McpToolModule } from "./mcpToolModule.js";

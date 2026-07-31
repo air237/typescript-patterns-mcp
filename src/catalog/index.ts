@@ -18,8 +18,16 @@ export {
 
 export { type PatternMetadata } from "./patternMetadata.js";
 
+export { type PatternExample } from "./patternExample.js";
+
 export {
   PatternRegistry,
   getPatternRegistry,
   _resetPatternRegistryForTests,
 } from "./patternRegistry.js";
+
+export {
+  PatternExamplesLoader,
+  getPatternExamplesLoader,
+  _resetPatternExamplesLoaderForTests,
+} from "./patternExamplesLoader.js";

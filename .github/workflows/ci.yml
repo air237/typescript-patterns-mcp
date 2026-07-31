@@ -70,6 +70,7 @@ jobs:
               echo '{"jsonrpc":"2.0","method":"notifications/initialized"}'
               echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
               echo '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"list_patterns","arguments":{}}}'
+              echo '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"pattern_examples","arguments":{"pattern":"singleton"}}}'
               sleep 2
             ) | node dist/index.js 2>/dev/null
           )
@@ -77,9 +78,13 @@ jobs:
           echo "$out" | grep -q '"serverInfo":{"name":"typescript-patterns-mcp"'
           echo "$out" | grep -q '"name":"ping"'
           echo "$out" | grep -q '"name":"list_patterns"'
-          # `count` lives inside a JSON-string content block, so it's
-          # escaped as \"count\":23 in the outer JSON-RPC envelope.
+          echo "$out" | grep -q '"name":"pattern_examples"'
+          # `count` and `fileCount` live inside a JSON-string content block,
+          # so they show up escaped as \"count\":23 / \"fileCount\":1 in
+          # the outer JSON-RPC envelope.
           echo "$out" | grep -q '\\"count\\":23'
+          echo "$out" | grep -q '\\"fileCount\\":1'
+          echo "$out" | grep -q '\\"pattern\\":\\"Singleton\\"'
 
       - name: Upload dist/ (Node ${{ matrix.node }})
         if: success()

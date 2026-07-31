@@ -11,6 +11,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 import {
   createListPatternsTool,
+  createPatternExamplesTool,
   createPingTool,
   type McpToolModule,
 } from "./tools/index.js";
@@ -45,8 +46,9 @@ export function buildServer(): McpServer {
   });
 
   const listPatterns = createListPatternsTool();
+  const patternExamples = createPatternExamplesTool();
 
-  const modules: readonly McpToolModule[] = [ping, listPatterns];
+  const modules: readonly McpToolModule[] = [ping, listPatterns, patternExamples];
   for (const mod of modules) {
     mod.register(server);
     registeredToolNames.push(mod.name);
