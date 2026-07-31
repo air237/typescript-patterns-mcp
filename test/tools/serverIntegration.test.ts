@@ -39,7 +39,7 @@ describe("MCP server integration (in-memory)", () => {
     };
   }
 
-  it("advertises the ping, list_patterns, pattern_examples and generate_pattern tools via tools/list", async () => {
+  it("advertises the ping, list_patterns, pattern_examples, generate_pattern and detect_pattern tools via tools/list", async () => {
     const { client, close } = await connectClientAndServer();
     try {
       const tools = await client.listTools();
@@ -48,7 +48,8 @@ describe("MCP server integration (in-memory)", () => {
       expect(names).toContain("list_patterns");
       expect(names).toContain("pattern_examples");
       expect(names).toContain("generate_pattern");
-      expect(names).toHaveLength(4);
+      expect(names).toContain("detect_pattern");
+      expect(names).toHaveLength(5);
     } finally {
       await close();
     }
@@ -68,6 +69,7 @@ describe("MCP server integration (in-memory)", () => {
       expect(text).toContain("list_patterns");
       expect(text).toContain("pattern_examples");
       expect(text).toContain("generate_pattern");
+      expect(text).toContain("detect_pattern");
     } finally {
       await close();
     }
@@ -233,6 +235,64 @@ describe("MCP server integration (in-memory)", () => {
       expect(result.isError).toBe(true);
       const content = result.content as Array<{ type: string; text: string }>;
       expect(content[0]?.text ?? "").toMatch(/PascalCase/);
+    } finally {
+      await close();
+    }
+  });
+
+  it("detect_pattern spots Singleton in an inline source", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const src = `
+        export class AuditLogger {
+          static #instance: AuditLogger | undefined;
+          private constructor() {}
+          static getInstance(): AuditLogger {
+            AuditLogger.#instance ??= new AuditLogger();
+            return AuditLogger.#instance;
+          }
+        }
+      `;
+      const result = await client.callTool({
+        name: "detect_pattern",
+        arguments: { source: src },
+      });
+      expect(result.isError).toBeFalsy();
+      const content = result.content as Array<{ type: string; text: string }>;
+      const payload = JSON.parse(content[0]!.text) as {
+        supportedPatterns: string[];
+        filesAnalyzed: number;
+        detectionCount: number;
+        detected: Array<{
+          pattern: string;
+          className: string;
+          confidence: number;
+          evidence: string[];
+        }>;
+      };
+      // All 23 patterns supported now.
+      expect(payload.supportedPatterns).toContain("Singleton");
+      expect(payload.filesAnalyzed).toBe(1);
+      const singletons = payload.detected.filter((d) => d.pattern === "Singleton");
+      expect(singletons.length).toBeGreaterThanOrEqual(1);
+      expect(singletons[0]?.className).toBe("AuditLogger");
+      expect(singletons[0]?.confidence).toBeGreaterThanOrEqual(0.75);
+      expect(singletons[0]?.evidence.length).toBeGreaterThanOrEqual(2);
+    } finally {
+      await close();
+    }
+  });
+
+  it("detect_pattern errors when no input mode is provided", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const result = await client.callTool({
+        name: "detect_pattern",
+        arguments: {},
+      });
+      expect(result.isError).toBe(true);
+      const content = result.content as Array<{ type: string; text: string }>;
+      expect(content[0]?.text ?? "").toMatch(/exactly one/);
     } finally {
       await close();
     }

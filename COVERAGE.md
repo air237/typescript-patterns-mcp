@@ -44,42 +44,42 @@ out of scope (see "Strategic grouping" above).
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Singleton | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| Builder | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| Factory Method | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| Observer | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| Strategy | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| Decorator | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| State | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| Command | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| Adapter | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| Composite | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| Proxy | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| Template Method | ✅ | ✅ | ⛔ | ⛔ | ⛔ |
-| **Group A subtotals** | **12/12** | **12/12** | **0/12** | **0/12** | **0/12** |
+| Singleton | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| Builder | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| Factory Method | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| Observer | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| Strategy | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| Decorator | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| State | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| Command | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| Adapter | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| Composite | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| Proxy | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| Template Method | ✅ | ✅ | ✅ | ⛔ | ⛔ |
+| **Group A subtotals** | **12/12** | **12/12** | **12/12** | **0/12** | **0/12** |
 
 ### B — generate + detect + validate (refactor stays out of scope)
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Abstract Factory | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
-| Bridge | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
-| Facade | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
-| Visitor | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
-| Chain of Responsibility | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
-| Mediator | ✅ | ✅ | ⛔ | ⛔ | ⚪ |
-| **Group B subtotals** | **6/6** | **6/6** | **0/6** | **0/6** | – |
+| Abstract Factory | ✅ | ✅ | ✅ | ⛔ | ⚪ |
+| Bridge | ✅ | ✅ | ✅ | ⛔ | ⚪ |
+| Facade | ✅ | ✅ | ✅ | ⛔ | ⚪ |
+| Visitor | ✅ | ✅ | ✅ | ⛔ | ⚪ |
+| Chain of Responsibility | ✅ | ✅ | ✅ | ⛔ | ⚪ |
+| Mediator | ✅ | ✅ | ✅ | ⛔ | ⚪ |
+| **Group B subtotals** | **6/6** | **6/6** | **6/6** | **0/6** | – |
 
 ### C — examples-only by design (extended with detect + generate)
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Prototype | ✅ | ✅ | ⛔ | ⚪ | ⚪ |
-| Flyweight | ✅ | ✅ | ⛔ | ⚪ | ⚪ |
-| Interpreter | ✅ | ✅ | ⛔ | ⚪ | ⚪ |
-| Iterator | ✅ | ✅ | ⛔ | ⚪ | ⚪ |
-| Memento | ✅ | ✅ | ⛔ | ⚪ | ⚪ |
-| **Group C subtotals** | **5/5** | **5/5** | **0/5** | – | – |
+| Prototype | ✅ | ✅ | ✅ | ⚪ | ⚪ |
+| Flyweight | ✅ | ✅ | ✅ | ⚪ | ⚪ |
+| Interpreter | ✅ | ✅ | ✅ | ⚪ | ⚪ |
+| Iterator | ✅ | ✅ | ✅ | ⚪ | ⚪ |
+| Memento | ✅ | ✅ | ✅ | ⚪ | ⚪ |
+| **Group C subtotals** | **5/5** | **5/5** | **5/5** | – | – |
 
 ---
 
@@ -89,19 +89,20 @@ out of scope (see "Strategic grouping" above).
 |---|---:|---:|---:|---|
 | `pattern_examples` | 23 | 23 | 100% | `resources/examples/<slug>/` directories, indexed by `resources/examples/examples-index.json` |
 | `generate_pattern` | 23 | 23 | 100% | `resources/templates/<slug>/` directories, indexed by `resources/templates/<slug>/template-index.json` per pattern; declared in `SUPPORTED_PATTERNS` in `src/generate/patternGenerator.ts` |
-| `detect_pattern` | 0 | 23 | 0% | `PatternDetectionEngine` detectors list |
+| `detect_pattern` | 23 | 23 | 100% | `PatternDetectionEngine` detector list in `src/detect/patternDetectionEngine.ts`; per-pattern detectors under `src/detect/detectors/` |
 | `validate_pattern` | 0 | 18 | 0% | `PatternValidationEngine` validators list |
 | `refactor_to_pattern` | 0 | – | 0% | `RefactoringId` enum |
 
-> **🎉 `pattern_examples` AND `generate_pattern` are now 23/23 — full parity
-> with `java-patterns-mcp`.** Both the bundled examples AND every
-> template's generated output type-check under `tsc --strict --noEmit`.
-> The checks are automated:
->   - `test/catalog/examplesCompile.test.ts` compiles the 74 bundled
->     example sources.
->   - `test/generate/generatedCompile.test.ts` generates every pattern
->     with `typeName="Widget"` into a temp dir and compiles all 61
->     produced files with the same strict tsconfig.
+> **🎉 `pattern_examples`, `generate_pattern` AND `detect_pattern` are now
+> 23/23 — full parity with `java-patterns-mcp`.** The full pipeline
+> (canonical example → template → AST detection) is closed for every
+> Gang-of-Four pattern. Automated checks:
+>   - `test/catalog/examplesCompile.test.ts` — the 74 bundled examples
+>     type-check under `tsc --strict --noEmit`.
+>   - `test/generate/generatedCompile.test.ts` — every template's
+>     generated output type-checks under the same tsconfig.
+>   - `test/detect/detectorCoverage.test.ts` — each pattern's canonical
+>     example triggers its own detector at confidence >= 0.50.
 
 ---
 
@@ -192,10 +193,36 @@ Deltas vs. the Java sibling:
 
 ### Phase 8 — `detect_pattern`
 
-ts-morph AST detectors, starting with the same 6 patterns the Java
-version shipped first: Singleton, Builder, Factory Method, Strategy,
-Observer, Composite. Each detector reports a confidence score
-∈ [0, 1] and a list of structural signals that fired.
+✅ Complete for all 23 patterns. Every canonical example bundled
+under `resources/examples/<slug>/` triggers its own detector at
+confidence >= 0.50 (verified by `test/detect/detectorCoverage.test.ts`).
+
+Deltas vs. the Java sibling:
+  - AST engine: `ts-morph` (fluent wrapper over the TypeScript
+    Compiler API) instead of `JavaParser`. Each detection call
+    creates a throwaway `Project` with an in-memory file system so
+    per-call analyses stay isolated.
+  - Java parameter fields have no direct analogue — TS has
+    "parameter properties" (`constructor(private readonly foo: Foo)`)
+    which are syntactically a `ParameterDeclaration` but
+    semantically an instance field. The shared `instanceFields()`
+    helper (`src/detect/detectors/detectorHelpers.ts`) unifies the
+    two node kinds so every detector rule works on both shapes at
+    once. Without this, half the canonical examples (Adapter,
+    Bridge, Composite, Decorator, Mediator, Proxy…) would miss
+    their "readonly field" signal because the field is declared on
+    the constructor parameter.
+  - Confidence scoring is identical: 4 independent structural
+    signals per pattern, each contributing 0.25. A detector fires
+    at 0.50 (2 signals) or above; anything less is likely a
+    false positive and gets dropped.
+  - Naming rules are slightly more permissive: where the Java
+    sibling requires `name !== "Handler"` etc. (to reject the
+    literal interface name), the TS detectors ONLY apply the
+    exclusion where it prevents a real false positive. The
+    canonical examples in `resources/examples/` intentionally use
+    short single-word names (`Handler`, `Command`, `Notifier`,
+    …) — the Java-style stricture would reject them.
 
 ### Phase 9 — `validate_pattern`
 

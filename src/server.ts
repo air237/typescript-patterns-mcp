@@ -10,6 +10,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 import {
+  createDetectPatternTool,
   createGeneratePatternTool,
   createListPatternsTool,
   createPatternExamplesTool,
@@ -49,12 +50,14 @@ export function buildServer(): McpServer {
   const listPatterns = createListPatternsTool();
   const patternExamples = createPatternExamplesTool();
   const generatePattern = createGeneratePatternTool();
+  const detectPattern = createDetectPatternTool();
 
   const modules: readonly McpToolModule[] = [
     ping,
     listPatterns,
     patternExamples,
     generatePattern,
+    detectPattern,
   ];
   for (const mod of modules) {
     mod.register(server);

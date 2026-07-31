@@ -23,4 +23,13 @@ export {
   isPascalCase,
 } from "./generatePatternTool.js";
 
+export {
+  DETECT_PATTERN_TOOL_NAME,
+  DEFAULT_MAX_FILES,
+  DEFAULT_MAX_FILE_BYTES,
+  createDetectPatternTool,
+  handleDetectPattern,
+  parseInput,
+} from "./detectPatternTool.js";
+
 export { type McpToolModule } from "./mcpToolModule.js";
