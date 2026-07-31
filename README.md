@@ -42,7 +42,7 @@ made ergonomic).
 | 7  | `generate_pattern` tool — templates for all 23 patterns (Java Phase 7 + 11 collapsed) | ✅ all 23 patterns |
 | 8  | `detect_pattern` (ts-morph AST detectors) — all 23 patterns | ✅ all 23 patterns |
 | 9  | `validate_pattern` — Group A + Group B (18 patterns; Group C intentionally out of scope) | ✅ 18/18 |
-| 10 | `refactor_to_pattern` (atomic AST rewrites) | ⏳ planned |
+| 10 | `refactor_to_pattern` — 12 idempotent AST rewrites across 11 Group A patterns | ✅ 12 refactorings |
 | 11 | Broadened coverage across all 3 groups | ✅ folded into Phase 7 |
 | 12 | GitHub Actions CI (Node 20, `npm ci`, `tsc`, Vitest) | ✅ done |
 | 13 | npm publication | ⏳ planned |
@@ -73,7 +73,7 @@ npm run build
 # produces: dist/index.js  (with a #!/usr/bin/env node shebang, exec bit set)
 ```
 
-## Try it (Phases 1–9 — `ping`, `list_patterns`, `pattern_examples`, `generate_pattern`, `detect_pattern` and `validate_pattern` are wired)
+## Try it (Phases 1–10 — all six functional tools are wired)
 
 After `npm run build`, smoke-test directly with shell-piped JSON-RPC.
 Note: the `(... ; sleep N)` wrapper keeps stdin open long enough for the
@@ -89,13 +89,14 @@ transport to flush each `tools/call` response.
   echo '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"generate_pattern","arguments":{"pattern":"singleton","typeName":"AuditLogger"}}}'
   echo '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"detect_pattern","arguments":{"source":"export class L { static #instance: L | undefined; private constructor() {} static getInstance(): L { L.#instance ??= new L(); return L.#instance; } }"}}}'
   echo '{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"validate_pattern","arguments":{"source":"export class Broken { public constructor() {} static getInstance(): Broken { return new Broken(); } }","pattern":"singleton"}}}'
+  echo '{"jsonrpc":"2.0","id":8,"method":"tools/call","params":{"name":"refactor_to_pattern","arguments":{"source":"export class Broken { public constructor() {} static getInstance(): Broken { return new Broken(); } }","refactoring":"singleton-make-ctor-private"}}}'
   sleep 2
 ) | node dist/index.js
 ```
 
-Expected: eight JSON-RPC responses on stdout — the last one a
-`validate_pattern` result flagging the `Broken` class with an ERROR
-issue about the public constructor.
+Expected: nine JSON-RPC responses on stdout — the last one a
+`refactor_to_pattern` result whose `newSource` contains
+`private constructor` (the public constructor of `Broken` demoted).
 
 ## Wire into OpenCode
 
@@ -140,20 +141,21 @@ typescript-patterns-mcp/
 │   ├── generate/                    ← PatternGenerator + template rendering
 │   ├── detect/                      ← PatternDetectionEngine + 23 ts-morph AST detectors
 │   ├── validate/                    ← PatternValidationEngine + 18 ts-morph rule validators
+│   ├── refactor/                    ← PatternRefactoringEngine + 12 idempotent AST rewrites
 │   ├── tools/                       ← MCP tool handlers
 │   │   ├── pingTool.ts              ← ✅ Phase 1
 │   │   ├── listPatternsTool.ts      ← ✅ Phase 3
 │   │   ├── patternExamplesTool.ts   ← ✅ Phase 4-6
 │   │   ├── generatePatternTool.ts   ← ✅ Phase 7 (23/23)
 │   │   ├── detectPatternTool.ts     ← ✅ Phase 8 (23/23)
-|   │   ├── validatePatternTool.ts   ← ✅ Phase 9 (18/18)
-│   │   └── refactorToPatternTool.ts ← Phase 10 (planned)
-│   └── refactor/                    ← atomic AST rewrites (Phase 10+)
+│   │   ├── validatePatternTool.ts   ← ✅ Phase 9 (18/18)
+│   │   └── refactorToPatternTool.ts ← ✅ Phase 10 (12 rewrites)
 └── test/
     ├── catalog/                     ← registry / metadata / examples-loader / tsc-compile tests
     ├── detect/                      ← PatternDetectionEngine + detectorCoverage (23-pattern lakmus) tests
     ├── generate/                    ← PatternGenerator + generatedCompile tests
     ├── validate/                    ← canonical-clean + anti-pattern + engine tests
+    ├── refactor/                    ← refactoringCoverage (fix + idempotency) + engine tests
     └── tools/                       ← tool-level tests + full stdio integration test
 ```
 

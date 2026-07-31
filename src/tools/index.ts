@@ -38,4 +38,10 @@ export {
   handleValidatePattern,
 } from "./validatePatternTool.js";
 
+export {
+  REFACTOR_TO_PATTERN_TOOL_NAME,
+  createRefactorToPatternTool,
+  handleRefactorToPattern,
+} from "./refactorToPatternTool.js";
+
 export { type McpToolModule } from "./mcpToolModule.js";

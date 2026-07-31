@@ -74,6 +74,7 @@ jobs:
               echo '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"generate_pattern","arguments":{"pattern":"singleton","typeName":"AuditLogger"}}}'
               echo '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"detect_pattern","arguments":{"source":"export class L { static #instance: L | undefined; private constructor() {} static getInstance(): L { L.#instance ??= new L(); return L.#instance; } }"}}}'
               echo '{"jsonrpc":"2.0","id":7,"method":"tools/call","params":{"name":"validate_pattern","arguments":{"source":"export class Broken { public constructor() {} static getInstance(): Broken { return new Broken(); } }","pattern":"singleton"}}}'
+              echo '{"jsonrpc":"2.0","id":8,"method":"tools/call","params":{"name":"refactor_to_pattern","arguments":{"source":"export class Broken { public constructor() {} static getInstance(): Broken { return new Broken(); } }","refactoring":"singleton-make-ctor-private"}}}'
               sleep 2
             ) | node dist/index.js 2>/dev/null
           )
@@ -85,9 +86,9 @@ jobs:
           echo "$out" | grep -q '"name":"generate_pattern"'
           echo "$out" | grep -q '"name":"detect_pattern"'
           echo "$out" | grep -q '"name":"validate_pattern"'
-          # `count` / `fileCount` / `detectionCount` / severity counts live
-          # inside JSON-string content blocks — they show up escaped in
-          # the outer JSON-RPC envelope.
+          echo "$out" | grep -q '"name":"refactor_to_pattern"'
+          # Counts / IDs inside the JSON-string content block appear
+          # escaped in the outer JSON-RPC envelope.
           echo "$out" | grep -q '\\"count\\":23'
           echo "$out" | grep -q '\\"fileCount\\":1'
           echo "$out" | grep -q '\\"pattern\\":\\"Singleton\\"'
@@ -95,9 +96,14 @@ jobs:
           echo "$out" | grep -q 'class AuditLogger'
           echo "$out" | grep -q '\\"detectionCount\\":[1-9]'
           echo "$out" | grep -q '\\"className\\":\\"L\\"'
-          # validate_pattern must flag the Broken singleton with >=1 error.
           echo "$out" | grep -q '\\"errors\\":[1-9]'
           echo "$out" | grep -q '\\"severity\\":\\"ERROR\\"'
+          # refactor_to_pattern must show a changed:true payload with
+          # at least one change and the rewritten source containing
+          # `private constructor`.
+          echo "$out" | grep -q '\\"changed\\":true'
+          echo "$out" | grep -q '\\"changeCount\\":[1-9]'
+          echo "$out" | grep -q 'private constructor'
 
       - name: Upload dist/ (Node ${{ matrix.node }})
         if: success()

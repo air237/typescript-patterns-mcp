@@ -39,7 +39,7 @@ describe("MCP server integration (in-memory)", () => {
     };
   }
 
-  it("advertises the ping, list_patterns, pattern_examples, generate_pattern, detect_pattern and validate_pattern tools via tools/list", async () => {
+  it("advertises the ping, list_patterns, pattern_examples, generate_pattern, detect_pattern, validate_pattern and refactor_to_pattern tools via tools/list", async () => {
     const { client, close } = await connectClientAndServer();
     try {
       const tools = await client.listTools();
@@ -50,7 +50,8 @@ describe("MCP server integration (in-memory)", () => {
       expect(names).toContain("generate_pattern");
       expect(names).toContain("detect_pattern");
       expect(names).toContain("validate_pattern");
-      expect(names).toHaveLength(6);
+      expect(names).toContain("refactor_to_pattern");
+      expect(names).toHaveLength(7);
     } finally {
       await close();
     }
@@ -72,6 +73,7 @@ describe("MCP server integration (in-memory)", () => {
       expect(text).toContain("generate_pattern");
       expect(text).toContain("detect_pattern");
       expect(text).toContain("validate_pattern");
+      expect(text).toContain("refactor_to_pattern");
     } finally {
       await close();
     }
@@ -252,6 +254,60 @@ describe("MCP server integration (in-memory)", () => {
       expect(result.isError).toBe(true);
       const content = result.content as Array<{ type: string; text: string }>;
       expect(content[0]?.text ?? "").toMatch(/No validator/);
+    } finally {
+      await close();
+    }
+  });
+
+  it("refactor_to_pattern flips a public-ctor Singleton to private", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const result = await client.callTool({
+        name: "refactor_to_pattern",
+        arguments: {
+          source: `
+            export class Broken {
+              public constructor() {}
+              static getInstance(): Broken { return new Broken(); }
+            }
+          `,
+          refactoring: "singleton-make-ctor-private",
+        },
+      });
+      expect(result.isError).toBeFalsy();
+      const content = result.content as Array<{ type: string; text: string }>;
+      const payload = JSON.parse(content[0]!.text) as {
+        refactoring: string;
+        pattern: string;
+        changed: boolean;
+        changeCount: number;
+        changes: string[];
+        newSource: string;
+      };
+      expect(payload.refactoring).toBe("singleton-make-ctor-private");
+      expect(payload.pattern).toBe("Singleton");
+      expect(payload.changed).toBe(true);
+      expect(payload.changeCount).toBe(1);
+      expect(payload.newSource).toMatch(/private constructor/);
+      expect(payload.newSource).not.toMatch(/public constructor/);
+    } finally {
+      await close();
+    }
+  });
+
+  it("refactor_to_pattern rejects an unknown refactoring id with isError=true", async () => {
+    const { client, close } = await connectClientAndServer();
+    try {
+      const result = await client.callTool({
+        name: "refactor_to_pattern",
+        arguments: {
+          source: "export class C {}",
+          refactoring: "singleton-nuke-everything",
+        },
+      });
+      expect(result.isError).toBe(true);
+      const content = result.content as Array<{ type: string; text: string }>;
+      expect(content[0]?.text ?? "").toMatch(/Unknown refactoring/);
     } finally {
       await close();
     }

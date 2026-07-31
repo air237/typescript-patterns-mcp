@@ -44,19 +44,19 @@ out of scope (see "Strategic grouping" above).
 
 | Pattern | `pattern_examples` | `generate` | `detect` | `validate` | `refactor` |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Singleton | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| Builder | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| Factory Method | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| Observer | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| Strategy | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| Decorator | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| State | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| Command | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| Adapter | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| Composite | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| Proxy | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| Template Method | ✅ | ✅ | ✅ | ✅ | ⛔ |
-| **Group A subtotals** | **12/12** | **12/12** | **12/12** | **12/12** | **0/12** |
+| Singleton | ✅ | ✅ | ✅ | ✅ | ✅ (2) |
+| Builder | ✅ | ✅ | ✅ | ✅ | ✅ (1) |
+| Factory Method | ✅ | ✅ | ✅ | ✅ | ✅ (1) |
+| Observer | ✅ | ✅ | ✅ | ✅ | ✅ (1) |
+| Strategy | ✅ | ✅ | ✅ | ✅ | ⚪ |
+| Decorator | ✅ | ✅ | ✅ | ✅ | ✅ (1) |
+| State | ✅ | ✅ | ✅ | ✅ | ✅ (1) |
+| Command | ✅ | ✅ | ✅ | ✅ | ✅ (1) |
+| Adapter | ✅ | ✅ | ✅ | ✅ | ✅ (1) |
+| Composite | ✅ | ✅ | ✅ | ✅ | ✅ (1) |
+| Proxy | ✅ | ✅ | ✅ | ✅ | ✅ (1) |
+| Template Method | ✅ | ✅ | ✅ | ✅ | ✅ (1) |
+| **Group A subtotals** | **12/12** | **12/12** | **12/12** | **12/12** | **11 patterns / 12 refactorings** |
 
 ### B — generate + detect + validate (refactor stays out of scope)
 
@@ -91,51 +91,54 @@ out of scope (see "Strategic grouping" above).
 | `generate_pattern` | 23 | 23 | 100% | `resources/templates/<slug>/` directories, indexed by `resources/templates/<slug>/template-index.json` per pattern; declared in `SUPPORTED_PATTERNS` in `src/generate/patternGenerator.ts` |
 | `detect_pattern` | 23 | 23 | 100% | `PatternDetectionEngine` detector list in `src/detect/patternDetectionEngine.ts`; per-pattern detectors under `src/detect/detectors/` |
 | `validate_pattern` | 18 | 18 | 100% | `PatternValidationEngine` validators list in `src/validate/patternValidationEngine.ts`; per-pattern validators under `src/validate/validators/` (Group C excluded by design) |
-| `refactor_to_pattern` | 0 | – | 0% | `RefactoringId` enum |
+| `refactor_to_pattern` | 12 refactorings on 11 patterns | – | – | `REFACTORING_IDS` in `src/refactor/refactoringId.ts`; per-recipe classes under `src/refactor/refactorings/` |
 
-> **🎉 `pattern_examples`, `generate_pattern`, `detect_pattern` AND
-> `validate_pattern` are now at full-target coverage — parity with the
-> Java sibling.** The four-tool pipeline (canonical example → template →
-> AST detection → quality validation) is closed for every applicable
-> Gang-of-Four pattern. Automated checks:
->   - `test/catalog/examplesCompile.test.ts` — the 74 bundled examples
->     type-check under `tsc --strict --noEmit`.
+> **🎉 All five functional tools now ship: `pattern_examples`,
+> `generate_pattern`, `detect_pattern`, `validate_pattern` AND
+> `refactor_to_pattern`.** The full pipeline — canonical example →
+> template → AST detection → quality validation → automated rewrite —
+> is closed for every applicable Gang-of-Four pattern. Automated
+> checks:
+>   - `test/catalog/examplesCompile.test.ts` — the 74 bundled
+>     examples type-check under `tsc --strict --noEmit`.
 >   - `test/generate/generatedCompile.test.ts` — every template's
 >     generated output type-checks under the same tsconfig.
->   - `test/detect/detectorCoverage.test.ts` — each pattern's canonical
->     example triggers its own detector at confidence >= 0.50.
+>   - `test/detect/detectorCoverage.test.ts` — each pattern's
+>     canonical example triggers its own detector at confidence >= 0.50.
 >   - `test/validate/canonicalCleanTest.test.ts` — each pattern's
 >     canonical example produces zero ERROR-severity issues from its
 >     own validator.
 >   - `test/validate/antiPatterns.test.ts` — for each of the 18
->     validators, a deliberately broken snippet produces at least one
->     issue of the expected severity.
+>     validators, a deliberately broken snippet produces at least
+>     one issue of the expected severity.
+>   - `test/refactor/refactoringCoverage.test.ts` — each of the 12
+>     refactorings rewrites its anti-pattern AND is idempotent
+>     (running twice yields `changed: false`).
 
 ---
 
 ## Refactorings inventory
 
-The `refactor_to_pattern` tool will expose individual transformations,
+The `refactor_to_pattern` tool exposes individual transformations,
 not "pattern conversions". Each entry below is the public slug callers
-pass to the MCP tool. Nothing wired yet — this table is planned parity
-with `java-patterns-mcp`.
+pass to the MCP tool.
 
 | Slug | Pattern | What it does | State |
 |---|---|---|:---:|
-| `singleton-make-ctor-private` | Singleton | Turn a public constructor into a private one. | ⛔ |
-| `singleton-add-holder-idiom` | Singleton | Replace an uncached `getInstance()` with a lazy-init singleton idiom (module-level `let instance` guarded by `getInstance()`). | ⛔ |
-| `singleton-freeze-instance` | Singleton | Wrap the returned instance in `Object.freeze(...)` inside `getInstance()` (TS-specific — takes the role of Java's `readResolve`). | ⛔ |
-| `builder-make-fields-readonly` | Builder | Mark every field of the Builder's product class as `readonly`. | ⛔ |
-| `observer-snapshot-iteration` | Observer | Wrap the iterated collection of a publish-like method with `[...listeners]` (TS spread) to snapshot the observer list. | ⛔ |
-| `adapter-make-adaptee-readonly` | Adapter | Mark the adaptee field of an Adapter-shaped class as `readonly`. | ⛔ |
-| `template-method-make-final` | Template Method | Emit `Object.freeze(cls.prototype.templateMethod)` or a JSDoc `@final` annotation with an ESLint hint so subclasses cannot bypass the locked algorithm skeleton. | ⛔ |
-| `factory-method-restrict-creator-ctor` | Factory Method | Demote public constructors of a concrete Creator to `protected` so callers cannot bypass the factory method. | ⛔ |
-| `strategy-narrow-to-function-type` | Strategy | Replace a one-method `*Strategy` interface with a callable-type alias (`type PricingStrategy = (order: Order) => Price`). | ⛔ |
-| `decorator-make-wrapped-readonly` | Decorator | Mark the wrapped delegate field of a Decorator-shaped class as `readonly`. | ⛔ |
-| `state-make-implementations-final` | State | JSDoc-mark or `Object.freeze` every concrete state class. | ⛔ |
-| `command-make-implementations-final` | Command | Same treatment as State for concrete command classes. | ⛔ |
-| `composite-make-children-readonly` | Composite | Mark the children collection field of a Composite-shaped class as `readonly`, and rewrite the getter to return `readonly T[]`. | ⛔ |
-| `proxy-make-subject-readonly` | Proxy | Mark the delegate (real-subject) field of a Proxy-shaped class as `readonly`. | ⛔ |
+| `singleton-make-ctor-private` | Singleton | Turn a public constructor into a private one. | ✅ |
+| `singleton-add-holder-idiom` | Singleton | Java Bill-Pugh idiom has no useful TS equivalent (`??=` already handles lazy init). | ⚪ |
+| `singleton-freeze-instance` | Singleton | Add `Object.freeze(this);` at the end of the private constructor. TS-specific — takes the role of Java's `readResolve`. | ✅ |
+| `builder-make-fields-readonly` | Builder | Mark every instance field of the Builder's product class as `readonly`. | ✅ |
+| `observer-snapshot-iteration` | Observer | Wrap the iterated collection inside a publish-like method with `[...listeners]` (TS spread) to snapshot the observer list. | ✅ |
+| `adapter-make-adaptee-readonly` | Adapter | Mark the adaptee field of an Adapter-shaped class as `readonly`. | ✅ |
+| `template-method-make-final` | Template Method | Add a `@final` JSDoc marker AND emit `Object.freeze(<Class>.prototype.<method>)` so subclasses cannot bypass the locked algorithm skeleton. | ✅ |
+| `factory-method-restrict-creator-ctor` | Factory Method | Demote public constructors of an abstract Creator to `protected` so callers cannot bypass the factory method. | ✅ |
+| `strategy-narrow-to-function-type` | Strategy | Replace a one-method `*Strategy` interface with a callable-type alias. Non-trivial AST rewrite (interface → type alias plus renaming every implementor). Left out of scope for the initial roll-out. | ⚪ |
+| `decorator-make-wrapped-readonly` | Decorator | Mark the wrapped delegate field of a Decorator-shaped class as `readonly`. | ✅ |
+| `state-make-implementations-final` | State | Emit `Object.freeze(<StateClass>.prototype)` after every concrete State declaration. | ✅ |
+| `command-make-implementations-final` | Command | Same treatment as State for concrete command classes. | ✅ |
+| `composite-make-children-readonly` | Composite | Mark the children collection field of a Composite-shaped class as `readonly`. | ✅ |
+| `proxy-make-subject-readonly` | Proxy | Mark the delegate (real-subject) field of a Proxy-shaped class as `readonly`. | ✅ |
 
 ---
 
@@ -269,22 +272,67 @@ non-pattern classes.
 
 ### Phase 10 — `refactor_to_pattern`
 
-Atomic AST rewrites. Each recipe is a single, idempotent, obvious
-fix (e.g. "promote this field to `readonly`"). Never bulk changes.
+✅ Complete. 12 idempotent AST rewrites shipped across 11 of the 12
+Group A patterns. Every recipe is:
+  - Small (one obvious fix per pass).
+  - Idempotent (running the same refactoring twice on the same
+    source returns `changed: false` the second time — verified by
+    `test/refactor/refactoringCoverage.test.ts`).
+  - Gated on shape (touches only classes that already look like
+    the target pattern — never a random class that happens to have
+    a public constructor).
+
+Deltas vs. the Java sibling:
+  - **`*-make-*-final` → `*-make-*-readonly`.** TS has no `final`
+    keyword; the closest structural equivalent for fields is the
+    `readonly` modifier. State / Command / Template Method
+    "make-implementations-final" refactorings emit
+    `Object.freeze(<Class>.prototype)` (or
+    `Object.freeze(<Class>.prototype.<method>)`) — TypeScript's
+    only real "runtime-locked class" idiom.
+  - **`singleton-add-read-resolve` → `singleton-freeze-instance`.**
+    The Java rule targets deserialisation; TS's concern is
+    accidental mutation of the shared instance across module
+    graphs. `Object.freeze(this)` in the constructor is the
+    idiomatic hardening.
+  - **`singleton-add-holder-idiom` → ⚪.** Java's Bill-Pugh
+    holder idiom has no useful TS equivalent — the `??=` operator
+    already handles lazy init in one line, and every canonical
+    Singleton example uses it.
+  - **`strategy-add-functional-interface` → `strategy-narrow-to-function-type` (⚪).**
+    The Java `@FunctionalInterface` annotation is a one-line
+    modifier; the TS equivalent (`interface {…}` → `type = () => …`)
+    would require renaming every implementor's class-level
+    `implements` clause and every consumer's method call. Non-
+    trivial AST rewrite left out of scope for the initial roll-out.
 
 ### Phase 12 — CI
 
 GitHub Actions: Node 20 + Node 22, `npm ci`, `tsc --noEmit`, `vitest run`,
 `eslint`. Same shape as the Java `ci.yml`.
 
-### 🏁 Long-term parity target
+### 🏁 Long-term parity target — reached
 
-Same 23/23 examples + generate + detect, 18/23 validate, 12
-patterns / 14 refactorings — matching what
+23/23 `pattern_examples`, 23/23 `generate_pattern`, 23/23
+`detect_pattern`, 18/18 `validate_pattern`, 12 refactorings on 11
+patterns for `refactor_to_pattern`. Feature parity with
 [`java-patterns-mcp`](https://github.com/air237/java-patterns-mcp)
-ships today. Any deviations (e.g. TS-specific validator rules that
-have no Java counterpart, or the reverse) get called out explicitly
-in this file so the two projects stay in lockstep.
+is reached, with all TS-specific deviations documented in the
+per-phase Roadmap sections above.
+
+Project-level follow-ups that would make sense from here:
+
+- **README polish + end-to-end demo** — walk an LLM agent through
+  the full pipeline (`detect` → `validate` → `refactor`) on a
+  real codebase.
+- **npm publication** — make the JAR-equivalent (the built `dist/`
+  bundle) consumable without cloning.
+- **CI bloat** — coverage report, release workflow, signed
+  artefacts.
+- **The two ⚪ refactorings** (`singleton-add-holder-idiom`,
+  `strategy-narrow-to-function-type`) — either close them if a
+  clean TS shape emerges, or document them permanently as
+  "not-applicable to TypeScript" in the Refactorings inventory.
 
 ---
 
